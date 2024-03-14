@@ -20,7 +20,7 @@ function Home(){
                     />
                     <View style={homeStyle.container4}>
                         <Text style={homeStyle.message2}>Good Day</Text>
-                        <Text style={homeStyle.message1}>Zhang LinHe</Text>
+                        <Text style={homeStyle.message1}>Zhang Luis</Text>
                     </View>
                     <Pressable style={{marginLeft:50}}>
                         <PointsCircle text="7000 points" />
