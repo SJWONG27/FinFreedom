@@ -2,37 +2,32 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Modal, ScrollView, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const PickerYearMonth = () => {
+const PickerMonthDay = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedYearIndex, setSelectedYearIndex] = useState(1);
   const [selectedMonthIndex, setSelectedMonthIndex] = useState(1);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(1);
 
-  const yearScrollViewRef = useRef(null);
   const monthScrollViewRef = useRef(null);
+  const dayScrollViewRef = useRef(null);
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, i) => currentYear + i); // Generate 10 years starting from current year
-  years.unshift(null); 
-  const months = [
-    '','January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',''
-  ];
+  const months = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', ''];
+  const daysInMonth = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 0];
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
-  };
-
-  const onYearScroll = (event) => {
-    const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 50);
-    if (index >= 0 && index < years.length) {
-      setSelectedYearIndex(index);
-    }
   };
 
   const onMonthScroll = (event) => {
     const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 49);
     if (index >= 0 && index < months.length) {
       setSelectedMonthIndex(index);
+    }
+  };
+
+  const onDayScroll = (event) => {
+    const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 49);
+    if (index >= 0 && index < daysInMonth[selectedMonthIndex]) {
+      setSelectedDayIndex(index + 1); // Adding 1 to make days start from 1 instead of 0
     }
   };
 
@@ -47,7 +42,7 @@ const PickerYearMonth = () => {
   return (
     <View style={styles.container}>
       <Pressable onPress={toggleModal} style={styles.pressable}>
-        <Text style={styles.selectedValues}>{years[selectedYearIndex]} - {months[selectedMonthIndex]} <Ionicons name={'caret-down'} size={20} color={'#FFE338'} /> </Text>
+        <Text style={styles.selectedValues}>{months[selectedMonthIndex]} {selectedDayIndex} <Ionicons name={'caret-down'} size={20} color={'#FFE338'} /> </Text>
       </Pressable>
       <Modal
         animationType="slide"
@@ -58,7 +53,7 @@ const PickerYearMonth = () => {
         <View style={styles.centeredView}>
           
           <View style={styles.modalView}>
-          <View style={styles.buttonContainer}>
+            <View style={styles.buttonContainer}>
               <Pressable onPress={onLeave} style={[styles.button, styles.leaveButton]}>
                 <Text style={styles.buttonTextLeave}>Leave</Text>
               </Pressable>
@@ -68,21 +63,21 @@ const PickerYearMonth = () => {
             </View>
             <View style={styles.row}>
               <ScrollView
-                ref={yearScrollViewRef}
-                onScroll={onYearScroll}
-                contentContainerStyle={styles.scrollViewContent}
-              >
-                {years.map((year, index) => (
-                  <Text key={index} style={[styles.option, selectedYearIndex === index && styles.selectedOption]}>{year}</Text>
-                ))}
-              </ScrollView>
-              <ScrollView
                 ref={monthScrollViewRef}
                 onScroll={onMonthScroll}
                 contentContainerStyle={styles.scrollViewContent}
               >
                 {months.map((month, index) => (
                   <Text key={index} style={[styles.option, selectedMonthIndex === index && styles.selectedOption]}>{month}</Text>
+                ))}
+              </ScrollView>
+              <ScrollView
+                ref={dayScrollViewRef}
+                onScroll={onDayScroll}
+                contentContainerStyle={styles.scrollViewContent}
+              >
+                {Array.from({ length: daysInMonth[selectedMonthIndex] }, (_, i) => i + 1).map((day) => (
+                  <Text key={day} style={[styles.option, selectedDayIndex === day && styles.selectedOption]}>{day}</Text>
                 ))}
               </ScrollView>
             </View>
@@ -174,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PickerYearMonth;
+export default PickerMonthDay;
