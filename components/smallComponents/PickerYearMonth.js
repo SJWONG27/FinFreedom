@@ -1,64 +1,176 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native'; // Remove Picker import from here
-import { Picker } from '@react-native-picker/picker'; // Import Picker from '@react-native-picker/picker'
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, Modal, ScrollView, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const PickerYearMonth = () => {
-  const [selectedYear, setSelectedYear] = useState('2024');
-  const [selectedMonth, setSelectedMonth] = useState('January');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedYearIndex, setSelectedYearIndex] = useState(1);
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(1);
+
+  const yearScrollViewRef = useRef(null);
+  const monthScrollViewRef = useRef(null);
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 10 }, (_, i) => currentYear + i); // Generate 10 years starting from current year
+  years.unshift(null); 
+  const months = [
+    '','January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',''
+  ];
+
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  const onYearScroll = (event) => {
+    const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 50);
+    if (index >= 0 && index < years.length) {
+      setSelectedYearIndex(index);
+    }
+  };
+
+  const onMonthScroll = (event) => {
+    const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 49);
+    if (index >= 0 && index < months.length) {
+      setSelectedMonthIndex(index);
+    }
+  };
+
+  const onConfirm = () => {
+    toggleModal();
+  };
+
+  const onLeave = () => {
+    toggleModal();
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Select Year and Month:</Text>
-      <View style={styles.pickerContainer}>
-        <Picker
-          selectedValue={selectedYear}
-          onValueChange={(itemValue, itemIndex) => setSelectedYear(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="2023" value="2023" />
-          <Picker.Item label="2024" value="2024" />
-          <Picker.Item label="2025" value="2025" />
-          {/* Add more years as needed */}
-        </Picker>
-        <Picker
-          selectedValue={selectedMonth}
-          onValueChange={(itemValue, itemIndex) => setSelectedMonth(itemValue)}
-          style={styles.picker}
-        >
-          <Picker.Item label="January" value="January" />
-          <Picker.Item label="February" value="February" />
-          <Picker.Item label="March" value="March" />
-          {/* Add more months as needed */}
-        </Picker>
-      </View>
-      <Text style={styles.selectedValues}>
-        Selected Year: {selectedYear}, Selected Month: {selectedMonth}
-      </Text>
+      <Pressable onPress={toggleModal} style={styles.pressable}>
+        <Text style={styles.selectedValues}>{years[selectedYearIndex]} - {months[selectedMonthIndex]} <Ionicons name={'caret-down'} size={20} color={'#6A6AFF'} /> </Text>
+      </Pressable>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={toggleModal}
+      >
+        <View style={styles.centeredView}>
+          
+          <View style={styles.modalView}>
+          <View style={styles.buttonContainer}>
+              <Pressable onPress={onLeave} style={[styles.button, styles.leaveButton]}>
+                <Text style={styles.buttonTextLeave}>Leave</Text>
+              </Pressable>
+              <Pressable onPress={onConfirm} style={[styles.button, styles.confirmButton]}>
+                <Text style={styles.buttonTextConfirm}>Confirm</Text>
+              </Pressable>
+            </View>
+            <View style={styles.row}>
+              <ScrollView
+                ref={yearScrollViewRef}
+                onScroll={onYearScroll}
+                contentContainerStyle={styles.scrollViewContent}
+              >
+                {years.map((year, index) => (
+                  <Text key={index} style={[styles.option, selectedYearIndex === index && styles.selectedOption]}>{year}</Text>
+                ))}
+              </ScrollView>
+              <ScrollView
+                ref={monthScrollViewRef}
+                onScroll={onMonthScroll}
+                contentContainerStyle={styles.scrollViewContent}
+              >
+                {months.map((month, index) => (
+                  <Text key={index} style={[styles.option, selectedMonthIndex === index && styles.selectedOption]}>{month}</Text>
+                ))}
+              </ScrollView>
+            </View>
+            
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.4,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  pickerContainer: {
-    flexDirection: 'row',
-  },
-  picker: {
-    flex: 1,
-    height: 50, // Adjust height as needed
-    // You can add more styles here
+  pressable: {
+    padding: 10,
+    alignContent: 'center',
+    justifyContent: 'space-between',
   },
   selectedValues: {
-    marginTop: 20,
-    fontSize: 16,
+    color:'#6A6AFF',
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    paddingLeft: 25,
+    paddingRight:25,
+    paddingBottom: 25,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    flex: 0.25,
+  },
+  row: {
+    flexDirection: 'row',
+    flex:1,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  option: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    width: 120,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  selectedOption: {
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonTextLeave: {
+    color: '#8B0000',
+    fontWeight: 'bold',
+  },
+  buttonTextConfirm: {
+    color: '#1A43BF',
+    fontWeight: 'bold',
   },
 });
 
