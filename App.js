@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import {View} from 'react-native';
-import { FIREBASE_AUTH } from './firebase';
+import { FIREBASE_AUTH } from './firebase'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
