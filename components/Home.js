@@ -40,7 +40,7 @@ function Home(){
                     <StaticBar percentage={20}/>
                 </View>
                 <View style={{margin:10}}>
-                    <NewsItem incomeRange={8000}/>
+                    <NewsItem incomeRange={3000}/>
                 </View>
             </View>
             </ScrollView>

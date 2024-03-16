@@ -86,8 +86,8 @@ const handleForgotPassword = () => {
                 </Pressable>
                 <Pressable
                         style={loginStyle.button}
-                        // onPress={handleSignIn}
-                        onPress={()=>navigation.navigate('MainApp')}
+                        onPress={handleSignIn}
+                        // onPress={()=>navigation.navigate('MainApp')}
                     >
                         <Text style={loginStyle.buttonText}>sign in</Text>
                 </Pressable>
