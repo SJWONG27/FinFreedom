@@ -80,7 +80,7 @@ function Profile({ navigation }) {
             source={profilePhoto ? { uri: profilePhoto } : (user?.photoURL ? { uri: user.photoURL } : defaultProfileImage)}
             style={profileStyle.profileImage}
           />
-          <Text style={profileStyle.username}>{user?.displayName || "Sample User"}</Text>
+          <Text style={profileStyle.username}>{user?.displayName || "User"}</Text>
           {user?.email && <Text style={profileStyle.email}>{user.email}</Text>}
         </View>
         <View style={profileStyle.buttonContainer}>
