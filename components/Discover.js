@@ -4,7 +4,7 @@ import StaticBar from './smallComponents/StaticBar';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const dataHome = [
-    { id: '1', title: 'Buy a House', info: '250000', amountSaved: '0', imageUrl: require('../assets/image5.png') },
+    { id: '1', title: 'Buy  House', info: '250000', amountSaved: '0', imageUrl: require('../assets/image5.png') },
     { id: '2', title: 'Buy a Car', info: '300000', amountSaved: '0', imageUrl: require('../assets/image6.png') },
     // { id: '3', title: 'Travel to Korea', info: '1500', amountSaved: '0', imageUrl: require('../assets/image7.png') }
 ];
