@@ -32,11 +32,10 @@ function Register(){
                     accessibilityLabel={'FinFreedom Logo'}
                 />
                 <View style={loginStyle.container2}>
-                    <Text style={loginStyle.textHeader}>Register</Text>
                     <Text style={loginStyle.text1}>Nice to see you</Text>
                 </View>
             </View>
-            <View style={loginStyle.container3}>
+            <View style={loginStyle.inputContainer}>
                 <View>
                     <Text style={loginStyle.inputLabel}>Username</Text>
                     <TextInput
@@ -84,12 +83,12 @@ function Register(){
                 >
                     <Text style={loginStyle.buttonText}>Register</Text>
                 </Pressable>
-                <Text>Already have an account?</Text>
+                <Text style={loginStyle.textAccount}>Already have an account?</Text>
                 <Pressable
                     style={loginStyle.button2}
                     onPress={()=>navigation.navigate('Login')}
                 >
-                    <Text style={loginStyle.buttonText2}>Sign in now</Text>
+                    <Text style={loginStyle.buttonTextSignInAccount}>Sign In</Text>
                 </Pressable>
             </View>
         </View>
@@ -98,31 +97,57 @@ function Register(){
 
 const loginStyle = StyleSheet.create({
     container1:{
-        flex: 0.25,
+        flex: 0.4,
         padding: 24,
-        marginTop: 25,
+      //  marginTop: 25,
         backgroundColor:'#000000',
         flexDirection:'row',
         alignItems:'center',
     },
     container2:{
-        marginLeft:25,
-        backgroundColor:'#000000',
+        left: '50%', 
+        backgroundColor:'rgba(0, 0, 0, 0.5)',
         flexDirection:'column',
         alignItems:'center',
+        marginLeft: -27, 
+        marginTop: 160,
     },
-    container3:{
-        flex: 0.75,
-        marginTop: 20,
-        backgroundColor:'#FFFFFF',
+    // container3:{
+    //     flex: 0.75,
+    //     marginTop: 20,
+    //     backgroundColor:'#FFFFFF',
+    //     flexDirection:'column',
+    //     alignItems:'center'
+    // },
+    inputContainer: {
+        position: 'absolute',
+        top: '35%',
+        maxWidth: 300, 
+        width: '80%',  
+        alignSelf: 'center',       
+        flex: 0.7,
+        borderRadius: 10,
+        padding: 8,
+        backgroundColor: '#FFFFFF',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
         flexDirection:'column',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent: 'center',
     },
     logo:{
-        height:127,
-        width:127,
-        marginTop: 20,
-        marginRight:0,
+        position: 'absolute',
+        height:200,
+        width:200,
+        left: '50%', 
+        marginLeft: -77, 
+        top: 80,
     },
     textHeader:{
         color:'#FFFFFF',
@@ -131,7 +156,7 @@ const loginStyle = StyleSheet.create({
     },
     text1:{
         color:'#FFFFFF',
-        fontSize: 12,
+        fontSize: 13,
     },
     input:{
         borderWidth:1,
@@ -170,6 +195,17 @@ const loginStyle = StyleSheet.create({
         textAlign:'center',
         textDecorationLine:'underline'
     },
+    buttonTextSignInAccount:{
+        color: '#000000',
+        marginLeft:155,
+        marginTop: -19,
+        fontWeight: 'bold',
+    },
+    textAccount:{
+        marginLeft:-55,
+        marginTop: 5,
+        opacity: 0.5,
+    }
 })
 
 export default Register;

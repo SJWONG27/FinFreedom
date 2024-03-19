@@ -209,6 +209,7 @@ const loginStyle = StyleSheet.create({
         color: '#001800',
         opacity: 0.5,
         fontStyle: 'italic',
+        fontSize: 13,
         
     },
     buttonTextCreateAccount:{
