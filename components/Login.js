@@ -52,13 +52,12 @@ const handleForgotPassword = () => {
                     accessibilityLabel={'FinFreedom Logo'}
                 />
                 <View style={loginStyle.container2}>
-                    <Text style={loginStyle.textHeader}>Login</Text>
                     <Text style={loginStyle.text1}>Welcome Back</Text>
                 </View>
             </View>
-            <View style={loginStyle.container3}>
+            <View style={loginStyle.inputContainer}>
                 <View>
-                    <Text style={loginStyle.inputLabel}>Email</Text>
+                    <Text style={loginStyle.inputEmail}>Email</Text>
                     <TextInput
                         value={email}
                         onChangeText={setEmail}
@@ -68,7 +67,7 @@ const handleForgotPassword = () => {
                 />
                 </View>
                 <View>
-                <Text style={loginStyle.inputLabel}>Password</Text>
+                <Text style={loginStyle.inputPassword}>Password</Text>
                     <TextInput
                         value={password}
                         onChangeText={setPassword}
@@ -82,22 +81,22 @@ const handleForgotPassword = () => {
                     style={loginStyle.button2}
                     onPress={handleForgotPassword}
                 >
-                    <Text style={loginStyle.buttonText2}>forgot password</Text>
+                    <Text style={loginStyle.buttonTextForgotPassword}>Forgot Password?</Text>
                 </Pressable>
                 <Pressable
                         style={loginStyle.button}
                         onPress={handleSignIn}
                         // onPress={()=>navigation.navigate('MainApp')}
                     >
-                        <Text style={loginStyle.buttonText}>sign in</Text>
+                        <Text style={loginStyle.buttonText}>Sign In</Text>
                 </Pressable>
                 
-                <Text>Don't have an account yet?</Text>
+                <Text style={loginStyle.textAccount}>Don't have an account?</Text>
                 <Pressable
                     style={loginStyle.button2}
                     onPress={()=>navigation.navigate('Register')}
                 >
-                    <Text style={loginStyle.buttonText2}>Create account now</Text>
+                    <Text style={loginStyle.buttonTextCreateAccount}>Register</Text>
                 </Pressable>
             </View>
         </View>
@@ -106,31 +105,35 @@ const handleForgotPassword = () => {
 
 const loginStyle = StyleSheet.create({
     container1:{
-        flex: 0.25,
+        flex: 0.4,
         padding: 24,
-        marginTop: 25,
+      //  marginTop: 25,
         backgroundColor:'#000000',
         flexDirection:'row',
         alignItems:'center',
     },
     container2:{
-        marginLeft:45,
-        backgroundColor:'#000000',
+        left: '50%', 
+        backgroundColor:'rgba(0, 0, 0, 0.5)',
         flexDirection:'column',
         alignItems:'center',
+        marginLeft: -27, 
+        marginTop: 160,
     },
-    container3:{
-        flex: 0.75,
-        marginTop: 50,
-        backgroundColor:'#FFFFFF',
-        flexDirection:'column',
-        alignItems:'center'
-    },
+    // container3:{
+    //     flex: 0.75,
+    //    marginTop: 50,
+    //     backgroundColor:'#FFFFFF',
+    //     flexDirection:'column',
+    //     alignItems:'center'
+    // },
     logo:{
-        height:127,
-        width:127,
-        marginTop: 20,
-        marginRight:0,
+        position: 'absolute',
+        height:200,
+        width:200,
+        left: '50%', 
+        marginLeft: -77, 
+        top: 80,
     },
     textHeader:{
         color:'#FFFFFF',
@@ -139,7 +142,7 @@ const loginStyle = StyleSheet.create({
     },
     text1:{
         color:'#FFFFFF',
-        fontSize: 12,
+        fontSize: 13,
     },
     input:{
         borderWidth:1,
@@ -150,7 +153,33 @@ const loginStyle = StyleSheet.create({
         marginBottom: 30,
         paddingHorizontal:10,
     },
-    inputLabel:{
+    inputContainer: {
+        position: 'absolute',
+        top: '35%',
+        maxWidth: 300, 
+        width: '80%',  
+        alignSelf: 'center',       
+        flex: 0.7,
+        borderRadius: 10,
+        padding: 8,
+        backgroundColor: '#FFFFFF',
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent: 'center',
+    },
+    inputEmail:{
+        marginTop:12,
+        marginBottom:5,
+    },
+    inputPassword:{
         marginBottom:5,
     },
     button:{
@@ -166,7 +195,7 @@ const loginStyle = StyleSheet.create({
         width: 200,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
-        marginTop:10,
+       
 
     },
     buttonText:{
@@ -174,11 +203,26 @@ const loginStyle = StyleSheet.create({
         color: '#FFFFFF',
         textAlign:'center'
     },
-    buttonText2:{
-        color: '#0018EF',
-        textAlign:'center',
-        textDecorationLine:'underline'
+    buttonTextForgotPassword:{
+        marginLeft: -18,
+     marginTop: -28,
+        color: '#001800',
+        opacity: 0.5,
+        fontStyle: 'italic',
+        
     },
+    buttonTextCreateAccount:{
+        color: '#000000',
+        marginLeft:140,
+        marginTop: -19,
+        fontWeight: 'bold',
+    },
+    textAccount:{
+        marginLeft:-70,
+        marginTop: 5,
+        opacity: 0.5,
+    }
+    
 })
 
 export default Login;
