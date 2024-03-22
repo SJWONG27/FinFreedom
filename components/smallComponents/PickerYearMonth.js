@@ -2,16 +2,15 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Modal, ScrollView, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const PickerYearMonth = () => {
+const PickerYearMonth = ({ selectedYear, selectedMonth, onYearChange, onMonthChange }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedYearIndex, setSelectedYearIndex] = useState(1);
-  const [selectedMonthIndex, setSelectedMonthIndex] = useState(1);
+  const [selectedYearIndex, setSelectedYearIndex] = useState(selectedYear);
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState(selectedMonth);
 
   const yearScrollViewRef = useRef(null);
   const monthScrollViewRef = useRef(null);
 
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, i) => currentYear + i); // Generate 10 years starting from current year
+  const years = Array.from({ length: 10 }, (_, i) => selectedYear + i); // Generate 10 years starting from selected year
   years.unshift(null); 
   const months = [
     '','January', 'February', 'March', 'April', 'May', 'June',
@@ -26,6 +25,7 @@ const PickerYearMonth = () => {
     const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 50);
     if (index >= 0 && index < years.length) {
       setSelectedYearIndex(index);
+      onYearChange(years[index]);
     }
   };
 
@@ -33,6 +33,7 @@ const PickerYearMonth = () => {
     const index = Math.round((event.nativeEvent.contentOffset.y + (event.nativeEvent.layoutMeasurement.height * 0.35)) / 49);
     if (index >= 0 && index < months.length) {
       setSelectedMonthIndex(index);
+      onMonthChange(index);
     }
   };
 
@@ -47,7 +48,7 @@ const PickerYearMonth = () => {
   return (
     <View style={styles.container}>
       <Pressable onPress={toggleModal} style={styles.pressable}>
-        <Text style={styles.selectedValues}>{years[selectedYearIndex]} - {months[selectedMonthIndex]} <Ionicons name={'caret-down'} size={20} color={'#FFE338'} /> </Text>
+        <Text style={styles.selectedValues}>{selectedYear} - {months[selectedMonth]} <Ionicons name={'caret-down'} size={20} color={'#FFE338'} /> </Text>
       </Pressable>
       <Modal
         animationType="slide"
@@ -56,9 +57,8 @@ const PickerYearMonth = () => {
         onRequestClose={toggleModal}
       >
         <View style={styles.centeredView}>
-          
           <View style={styles.modalView}>
-          <View style={styles.buttonContainer}>
+            <View style={styles.buttonContainer}>
               <Pressable onPress={onLeave} style={[styles.button, styles.leaveButton]}>
                 <Text style={styles.buttonTextLeave}>Leave</Text>
               </Pressable>
@@ -86,7 +86,6 @@ const PickerYearMonth = () => {
                 ))}
               </ScrollView>
             </View>
-            
           </View>
         </View>
       </Modal>

@@ -3,14 +3,50 @@ import {View, Text,  StyleSheet, ImageBackground, Pressable, ScrollView, Modal} 
 import { Ionicons } from '@expo/vector-icons';
 import NumberPad from './smallComponents/NumberPad';
 
+
 function BudgetCategory() {
 
     const [showNumberPad, setShowNumberPad] = useState(false); // State to control the visibility of the modal
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [enteredAmount, setEnteredAmount] = useState('');
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-    const handlePress = () => {
-        setShowNumberPad(!showNumberPad); // Toggle the visibility of the modal
+    const handlePress = (category) => {
+        setSelectedCategory(category);
+        setShowNumberPad(true); // Show the number pad modal
+    };
+    
+
+
+    const handleConfirm = (amount) => {
+        // Convert entered amount to a number
+        const parsedAmount = parseFloat(amount);
+
+        if (!isNaN(parsedAmount) && parsedAmount !== 0) {
+            // Perform validation or other operations here if needed
+            setShowSuccessMessage(true);
+            // Clear selected category and entered amount
+            setSelectedCategory('');
+            setEnteredAmount('');
+            setShowNumberPad(false); // Close the number pad modal
+        } else {
+            // Input cannot be 0 or NaN, display an alert or message to the user
+            alert('Please enter a valid amount.');
+        }
     };
 
+    const handleCancel = () => {
+        setShowNumberPad(false); // Close the number pad modal
+    };
+
+    const handleOk = () => {
+        setShowSuccessMessage(false); // Close the success message
+    };
+
+    const handleDelete = () => {
+        // Remove the last character from enteredAmount
+        setEnteredAmount(enteredAmount.slice(0, -1));
+    };
 
     return(
         <ImageBackground
@@ -24,7 +60,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Food')}
                             >
                                 <Ionicons name={'fast-food-outline'} size={30}/>
                             </Pressable>
@@ -33,7 +69,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Shopping')}
                             >
                                 <Ionicons name={'bag-handle-outline'} size={30}/>
                             </Pressable>
@@ -42,7 +78,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Daily Use')}
                             >
                                 <Ionicons name={'happy-outline'} size={30}/>
                             </Pressable>
@@ -51,7 +87,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Transport')}
                             >
                                 <Ionicons name={'car-sport-outline'} size={30}/>
                             </Pressable>
@@ -63,7 +99,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Fun')}
                             >
                                 <Ionicons name={'balloon-outline'} size={30}/>
                             </Pressable>
@@ -72,7 +108,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Digital')}
                             >
                                 <Ionicons name={'phone-portrait-outline'} size={30}/>
                             </Pressable>
@@ -81,7 +117,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Parents')}
                             >
                                 <Ionicons name={'people-outline'} size={30}/>
                             </Pressable>
@@ -90,6 +126,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
+                                onPress={() => handlePress('Kids')}
                             >
                                 <Ionicons name={'accessibility-outline'} size={30}/>
                             </Pressable>
@@ -100,7 +137,7 @@ function BudgetCategory() {
                     <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Rent')}
                             >
                                 <Ionicons name={'home-outline'} size={30}/>
                             </Pressable>
@@ -109,7 +146,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Travel')}
                             >
                                 <Ionicons name={'airplane-outline'} size={30}/>
                             </Pressable>
@@ -118,7 +155,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Pet')}
                             >
                                 <Ionicons name={'logo-octocat'} size={30}/>
                             </Pressable>
@@ -127,7 +164,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Others')}
                             >
                                 <Ionicons name={'cash-outline'} size={30}/>
                             </Pressable>
@@ -142,7 +179,7 @@ function BudgetCategory() {
                     <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Salary')}
                             >
                                 <Ionicons name={'laptop-outline'} size={30}/>
                             </Pressable>
@@ -151,7 +188,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Part Time')}
                             >
                                 <Ionicons name={'time-outline'} size={30}/>
                             </Pressable>
@@ -160,7 +197,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Invest')}
                             >
                                 <Ionicons name={'analytics-outline'} size={30}/>
                             </Pressable>
@@ -169,7 +206,7 @@ function BudgetCategory() {
                         <View style={{alignItems:'center'}}>
                             <Pressable
                                 style={budgetCategoryStyle.pressButton}
-                                onPress={handlePress}
+                                onPress={() => handlePress('Others')}
                             >
                                 <Ionicons name={'download-outline'} size={30}/>
                             </Pressable>
@@ -183,18 +220,36 @@ function BudgetCategory() {
                 animationType="slide"
                 transparent={true}
                 visible={showNumberPad} // Control the visibility of the modal
-                onRequestClose={handlePress} // Add onRequestClose handler to close the modal
+                onRequestClose={handleCancel} // Add onRequestClose handler to close the modal
             >
                 <View style={budgetCategoryStyle.modalContainer}>
                     <View style={budgetCategoryStyle.modalContent}>
-                        <NumberPad />
-                        <Pressable onPress={handlePress} style={budgetCategoryStyle.closeButton}>
-                            <Text style={budgetCategoryStyle.closeButtonText}>Close</Text>
+                        <NumberPad
+                            onNumberPress={(num) => setEnteredAmount(enteredAmount + num)}
+                            onDeletePress={handleDelete}
+                            onConfirm={handleConfirm}
+                            onCancel={handleCancel}
+                        />
+                        {/* Cancel button */}
+                        <Pressable onPress={handleCancel} style={budgetCategoryStyle.closeButton}>
+                            <Text style={budgetCategoryStyle.closeButtonText}>Cancel</Text>
                         </Pressable>
                     </View>
                 </View>
             </Modal>
 
+            {/* Success message container */}
+            {showSuccessMessage && (
+                <View style={budgetCategoryStyle.overlay}>
+                    <View style={budgetCategoryStyle.successContainer}>
+                        <Text style={budgetCategoryStyle.successMessage}>Successfully recorded!</Text>
+                        <Text style={budgetCategoryStyle.successMessage}>10P Gained!</Text>
+                        <Pressable onPress={handleOk} style={budgetCategoryStyle.okButton}>
+                            <Text style={budgetCategoryStyle.okButtonText}>OK</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            )}
         </ImageBackground>
     );
 }
@@ -266,6 +321,35 @@ const budgetCategoryStyle = StyleSheet.create({
     closeButtonText: {
         fontSize: 16,
         color: '#8B0000',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1, // Ensure the overlay is above other content
+    },
+    successContainer: {
+        backgroundColor: '#FFFFFF',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        zIndex: 2, // Ensure the success message is above the overlay
+    },
+    successMessage: {
+        fontSize: 18,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
+    okButton: {
+        backgroundColor: '#1A43BF',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+    },
+    okButtonText: {
+        fontSize: 16,
+        color: '#FFFFFF',
     },
 })
 

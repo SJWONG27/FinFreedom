@@ -10,9 +10,10 @@ const dataHome = [
 ];
 
 const Item = ({ id, title, info, amountSaved, imageUrl, onDelete, onUpdateAmountSaved }) => {
-    const amountToBeSaved = parseInt(info);
+    const totalAmount = parseInt(info);
     const amountSavedInt = parseInt(amountSaved);
-    const percentage = (amountSavedInt / amountToBeSaved) * 100;
+    const remainingAmount = totalAmount - amountSavedInt;
+    const percentage = (amountSavedInt / totalAmount) * 100;
 
     return (
         <View>
@@ -23,7 +24,9 @@ const Item = ({ id, title, info, amountSaved, imageUrl, onDelete, onUpdateAmount
             >
                 <View style={discoverStyle.content}>
                     <Text style={discoverStyle.message3}>Goal {id} - {title}</Text>
-                    <Text style={discoverStyle.message4}>RM {info}</Text>
+                    <Text style={discoverStyle.message4}>Total Amount: RM {info}</Text>
+                    <Text style={discoverStyle.message4}>Amount Saved: RM {amountSaved}</Text>
+                    <Text style={discoverStyle.message4}>Remaining Amount: RM {remainingAmount}</Text>
                     <TextInput
                         style={discoverStyle.input}
                         placeholder="Amount Saved"
@@ -50,14 +53,15 @@ const Discover = () => {
     const [newGoalInfo, setNewGoalInfo] = useState('');
     const [newAmountSaved, setNewAmountSaved] = useState('');
 
-    const addGoal = () => {
-        if (goals.length < 3) {
-            setModalVisible(true);
-        }
+    const calculateRemainingAmount = (totalAmount, amountSaved) => {
+        return parseInt(totalAmount) - parseInt(amountSaved);
     };
 
     const handleAddNewGoal = () => {
         if (newGoalTitle && newGoalInfo && newAmountSaved) {
+            const remainingAmount = calculateRemainingAmount(newGoalInfo, newAmountSaved);
+            console.log("Remaining amount needed:", remainingAmount);
+
             const newGoal = { id: String(goals.length + 1), title: newGoalTitle, info: newGoalInfo, amountSaved: newAmountSaved, imageUrl: require('../assets/image6.png') };
             setGoals([...goals, newGoal]);
             setModalVisible(false);
@@ -89,93 +93,125 @@ const Discover = () => {
         setGoals(updatedGoals);
     };
 
+    const addGoal = () => {
+        if (goals.length < 3) {
+            setModalVisible(true);
+        }
+    };
+
     return (
+        <ScrollView>
         <ImageBackground
             source={require('../assets/background.png')}
             style={discoverStyle.container}
         >
+                <View style={{marginTop:25,}}>
+                    {/* Introduction */}
+                    <View style={discoverStyle.introContainer}>
+                        <Text style={discoverStyle.introTitle}>Welcome to Financial Goals</Text>
+                        <Text style={discoverStyle.introText}>
+                            Start planning for your financial future by setting SMART goals.
+                            Whether it's saving for a house, a car, or a dream vacation,
+                            we're here to help you achieve your aspirations.
+                        </Text>
+                    </View>
+                    </View>
             <ScrollView>
-            <View style={discoverStyle.container2}>
-                <Text style={discoverStyle.modalTitle}>Income:</Text>
-                <Text style={discoverStyle.modalTitle}>Budget:</Text>
-                <Text style={discoverStyle.modalTitle}>Expenses:</Text>
-                <Text style={discoverStyle.modalTitle}>Balance:</Text>
-            </View>
-            <View>
-                <FlatList
-                    style={{ margin: 10, marginTop: 30 }}
-                    data={goals}
-                    horizontal
-                    renderItem={({ item }) => (
-                        <Item
-                            id={item.id}
-                            title={item.title}
-                            info={item.info}
-                            amountSaved={item.amountSaved}
-                            imageUrl={item.imageUrl}
-                            onDelete={handleDeleteGoal}
-                            onUpdateAmountSaved={handleUpdateAmountSaved}
-                        />
+                <View style={{marginTop:0,}}>
+                    <FlatList
+                        style={{ margin: 10, marginTop: 30 }}
+                        data={goals}
+                        horizontal
+                        renderItem={({ item }) => (
+                            <Item
+                                id={item.id}
+                                title={item.title}
+                                info={item.info}
+                                amountSaved={item.amountSaved}
+                                imageUrl={item.imageUrl}
+                                onDelete={handleDeleteGoal}
+                                onUpdateAmountSaved={handleUpdateAmountSaved}
+                            />
+                        )}
+                        keyExtractor={item => item.id}
+                        showsHorizontalScrollIndicator={false}
+                        snapToInterval={139}
+                        decelerationRate="fast"
+                        indicatorStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
+                    />
+                    <Text style={discoverStyle.reminder}>Maximum 3 goals could be added</Text>
+                    {goals.length < 3 && (
+                        <Pressable onPress={addGoal} style={discoverStyle.addGoalButton}>
+                            <Text style={discoverStyle.addGoalButtonText}>Add Goal</Text>
+                        </Pressable>
                     )}
-                    keyExtractor={item => item.id}
-                    showsHorizontalScrollIndicator={false}
-                    snapToInterval={139}
-                    decelerationRate="fast"
-                    indicatorStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
-                />
-                <Text style={discoverStyle.reminder}>Maximum 3 goals could be added</Text>
-                {goals.length < 3 && (
-                    <Pressable onPress={addGoal} style={discoverStyle.addGoalButton}>
-                        <Text style={discoverStyle.addGoalButtonText}>Add Goal</Text>
-                    </Pressable>
-                )}
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={discoverStyle.modalContainer}>
-                        <View style={discoverStyle.modalContent}>
-                            <Text style={discoverStyle.modalTitle}>Add New Goal</Text>
-                            <TextInput
-                                style={discoverStyle.input}
-                                placeholder="Enter Your Goal"
-                                placeholderTextColor="#CCCCCC"
-                                value={newGoalTitle}
-                                onChangeText={text => setNewGoalTitle(text)}
-                                maxLength={50}
-                            />
-                            <TextInput
-                                style={discoverStyle.input}
-                                placeholder="Money Amount"
-                                placeholderTextColor="#CCCCCC"
-                                value={newGoalInfo}
-                                onChangeText={text => setNewGoalInfo(text)}
-                                keyboardType='number-pad'
-                            />
-                            <TextInput
-                                style={discoverStyle.input}
-                                placeholder="Amount Saved"
-                                placeholderTextColor="#CCCCCC"
-                                value={newAmountSaved}
-                                onChangeText={text => setNewAmountSaved(text)}
-                                keyboardType='number-pad'
-                            />
-                            <View style={discoverStyle.buttonContainer}>
-                                <Pressable onPress={handleCancel} style={discoverStyle.addButton}>
-                                    <Text style={discoverStyle.cancelButtonText}>Cancel</Text>
-                                </Pressable>
-                                <Pressable onPress={handleAddNewGoal} style={discoverStyle.addButton}>
-                                    <Text style={discoverStyle.addButtonText}>Add</Text>
-                                </Pressable>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}
+                    >
+                        <View style={discoverStyle.modalContainer}>
+                            <View style={discoverStyle.modalContent}>
+                                <Text style={discoverStyle.modalTitle}>Add New Goal</Text>
+                                <TextInput
+                                    style={discoverStyle.input}
+                                    placeholder="Enter Your Goal"
+                                    placeholderTextColor="#CCCCCC"
+                                    value={newGoalTitle}
+                                    onChangeText={text => setNewGoalTitle(text)}
+                                    maxLength={50}
+                                />
+                                <TextInput
+                                    style={discoverStyle.input}
+                                    placeholder="Money Amount"
+                                    placeholderTextColor="#CCCCCC"
+                                    value={newGoalInfo}
+                                    onChangeText={text => setNewGoalInfo(text)}
+                                    keyboardType='number-pad'
+                                />
+                                <TextInput
+                                    style={discoverStyle.input}
+                                    placeholder="Amount Saved"
+                                    placeholderTextColor="#CCCCCC"
+                                    value={newAmountSaved}
+                                    onChangeText={text => setNewAmountSaved(text)}
+                                    keyboardType='number-pad'
+                                />
+                                <View style={discoverStyle.buttonContainer}>
+                                    <Pressable onPress={handleCancel} style={discoverStyle.addButton}>
+                                        <Text style={discoverStyle.cancelButtonText}>Cancel</Text>
+                                    </Pressable>
+                                    <Pressable onPress={handleAddNewGoal} style={discoverStyle.addButton}>
+                                        <Text style={discoverStyle.addButtonText}>Add</Text>
+                                    </Pressable>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </Modal>
-            </View>
+                    </Modal>
+                </View>
             </ScrollView>
+            {/* Goal Setting Tips */}
+            <View style={discoverStyle.tipsContainer}>
+                        <Text style={discoverStyle.tipsTitle}>Goal Setting Tips</Text>
+                        <Text style={discoverStyle.tip}>
+                            1. Be Specific: Clearly define your financial goals, including the amount you want to save and the timeframe.
+                        </Text>
+                        <Text style={discoverStyle.tip}>
+                            2. Make Them Measurable: Set measurable milestones to track your progress along the way.
+                        </Text>
+                        <Text style={discoverStyle.tip}>
+                            3. Ensure They're Achievable: Set goals that are realistic and attainable based on your current financial situation.
+                        </Text>
+                        <Text style={discoverStyle.tip}>
+                            4. Keep Them Relevant: Align your goals with your long-term financial objectives and personal aspirations.
+                        </Text>
+                        <Text style={discoverStyle.tip}>
+                            5. Set a Time Frame: Establish deadlines for achieving each goal to create a sense of urgency and motivation.
+                        </Text>
+                    </View>
         </ImageBackground>
+        </ScrollView>
     );
 };
 
@@ -193,7 +229,7 @@ const discoverStyle = StyleSheet.create({
     },
     item: {
         width: 250,
-        height: 250,
+        height: 380,
         borderRadius: 10,
         marginRight: 10,
         overflow: 'hidden',
@@ -242,6 +278,7 @@ const discoverStyle = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
     },
     modalContent: {
         backgroundColor: '#000000',
@@ -298,6 +335,43 @@ const discoverStyle = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    introContainer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: 10,
+        padding: 20,
+        marginTop:20,
+        marginBottom: 20,
+    },
+    introTitle: {
+        color: '#FFFFFF',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    introText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+    },
+
+    // Goal setting tips styles
+    tipsContainer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: 10,
+        padding: 20,
+        marginBottom: 20,
+        marginTop:20,
+    },
+    tipsTitle: {
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    tip: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        marginBottom: 5,
     },
 });
 

@@ -13,6 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import {View} from 'react-native';
 import { FIREBASE_AUTH } from './firebase';
+import Points from './components/Points';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,6 +66,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Stack.Screen name="MainApp" component={MainAppNavigator} options={{ headerShown: false }} /> 
+        <Stack.Screen name="Points" component={Points} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
     </View>

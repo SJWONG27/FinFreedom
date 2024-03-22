@@ -1,63 +1,106 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, Linking, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Linking, StyleSheet, ScrollView } from 'react-native';
 
-const NewsItem = ({ incomeRange }) => {
-  // Function to get news based on income range
-  const getNewsForIncomeRange = (range) => {
-    if (range >= 10000) {
-      return {
-        title: 'High-income News',
-        image: 'https://media.eliteagent.com/wp-content/uploads/2024/03/Wealthy-households-are-renting-more-than-ever.png',
-        link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
-      };
-    } else if (range >= 5000) {
-      return {
-        title: 'Medium-income News',
-        image: 'https://media.eliteagent.com/wp-content/uploads/2024/03/Wealthy-households-are-renting-more-than-ever.png',
-        link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
-      };
-    } else {
-      return {
-        title: 'Low-income News',
-        image: 'https://media.eliteagent.com/wp-content/uploads/2024/03/Wealthy-households-are-renting-more-than-ever.png',
-        link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
-      };
+const NewsItem = () => {
+  // News items for low income
+  const lowIncomeNews = [
+    {
+      title: 'Low-income News',
+      image: 'https://media.eliteagent.com/wp-content/uploads/2024/03/Wealthy-households-are-renting-more-than-ever.png',
+      link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
     }
-  };
+  ];
 
-  // Get news based on income range
-  const newsItem = getNewsForIncomeRange(incomeRange);
+  // News items for medium income
+  const mediumIncomeNews = [
+    {
+      title: 'Medium-income News',
+      image: 'https://media.eliteagent.com/wp-content/uploads/2021/04/12100242/Untitled-design-56-768x432.png',
+      link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
+    }
+  ];
+
+  // News items for high income
+  const highIncomeNews = [
+    {
+      title: 'High-income News',
+      image: 'https://media.eliteagent.com/wp-content/uploads/2018/10/11123450/stressed-768x432.jpg',
+      link: 'https://eliteagent.com/high-income-households-rent-more-low-income-renters-face-greater-stress/',
+    }
+  ];
 
   // Function to handle link press
-  const handleLinkPress = () => {
-    Linking.openURL(newsItem.link);
+  const handleLinkPress = (link) => {
+    Linking.openURL(link);
   };
 
   return (
-    <TouchableOpacity onPress={handleLinkPress}>
-      <View style={styles.container}>
-        <Image source={{ uri: newsItem.image }} style={styles.image} />
-        <Text style={styles.title}>{newsItem.title}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <ScrollView horizontal={true} style={styles.scrollView}>
+        <View style={styles.newsContainer}>
+          {lowIncomeNews.map((item, index) => (
+            <TouchableOpacity key={index} onPress={() => handleLinkPress(item.link)}>
+              <View style={styles.itemContainer}>
+                <Image source={{ uri: item.image }} style={styles.image} />
+                <Text style={styles.title}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styles.newsContainer}>
+          {mediumIncomeNews.map((item, index) => (
+            <TouchableOpacity key={index} onPress={() => handleLinkPress(item.link)}>
+              <View style={styles.itemContainer}>
+                <Image source={{ uri: item.image }} style={styles.image} />
+                <Text style={styles.title}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styles.newsContainer}>
+          {highIncomeNews.map((item, index) => (
+            <TouchableOpacity key={index} onPress={() => handleLinkPress(item.link)}>
+              <View style={styles.itemContainer}>
+                <Image source={{ uri: item.image }} style={styles.image} />
+                <Text style={styles.title}>{item.title}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius:10,
+    marginBottom:25,
+  },
+  scrollView: {
     flexDirection: 'row',
+    borderRadius:10,
+  },
+  newsContainer: {
+    marginLeft:10,
+    marginRight:10,
+    backgroundColor: 'lightblue',
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
+  itemContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
     padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    marginBottom: 10,
   },
   image: {
     width: 150,
     height: 150,
-    marginRight: 10,
+    marginBottom: 10,
     borderRadius: 5,
   },
   title: {

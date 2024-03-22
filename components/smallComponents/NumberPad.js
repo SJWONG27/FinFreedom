@@ -2,16 +2,27 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import PickerMonthDay from './PickerMonthDay';
 
-const NumberPad = () => {
+const NumberPad = ({ onNumberPress, onDeletePress, onConfirm, onCancel }) => {
   const [amount, setAmount] = useState('');
 
   const handleInput = (input) => {
     if (input === 'delete') {
       setAmount(amount.slice(0, -1));
+    } else if (input === 'confirm') {
+      onConfirm(amount);
+    } else if (input === 'cancel') {
+      onCancel();
     } else {
-      setAmount(amount + input);
+      setAmount((prevAmount) => {
+        if (input === '.' && prevAmount.includes('.')) {
+          // Prevent adding multiple decimal points
+          return prevAmount;
+        }
+        return prevAmount + input;
+      });
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -66,9 +77,12 @@ const NumberPad = () => {
         
         <View style={styles.container}>
           <PickerMonthDay/>
-          <Pressable style={styles.buttonLong}>
+          <Pressable onPress={() => handleInput('confirm')} style={styles.buttonLong}>
             <Text style={styles.buttonLongText}>Confirm</Text>
           </Pressable>
+          {/* <Pressable onPress={() => handleInput('cancel')} style={styles.buttonLong}>
+            <Text style={styles.buttonLongText}>Cancel</Text>
+          </Pressable> */}
         </View>
 
       </View>
