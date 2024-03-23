@@ -77,20 +77,32 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#FFFFFF',
     borderRadius:10,
     marginBottom:25,
+    
+    
   },
   scrollView: {
     flexDirection: 'row',
     borderRadius:10,
+    
   },
   newsContainer: {
     marginLeft:10,
     marginRight:10,
-    backgroundColor: 'lightblue',
+    backgroundColor: 'white',
     borderRadius: 15,
-    overflow: 'hidden',
+    overflow: 'hidden',  borderRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+  elevation: 5,
+  marginBottom:5,
+  
   },
   itemContainer: {
     flexDirection: 'column',
@@ -102,6 +114,7 @@ const styles = StyleSheet.create({
     height: 150,
     marginBottom: 10,
     borderRadius: 5,
+    
   },
   title: {
     fontSize: 16,

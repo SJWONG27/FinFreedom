@@ -12,7 +12,7 @@ const StaticBar = ({ percentage }) => {
 const staticStyles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 15,
+    height: 7,
     backgroundColor: 'lightgray',
     borderRadius: 10,
     overflow: 'hidden',
@@ -20,7 +20,7 @@ const staticStyles = StyleSheet.create({
   bar: {
     height: '100%',
     width: 20,
-    backgroundColor: '#FFE338',
+    backgroundColor: 'green',
   },
 });
 
