@@ -39,11 +39,11 @@ const MainAppNavigator = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#6A6AFF',
-        tabBarInactiveTintColor: '#6A6AFF',
+        tabBarActiveTintColor: '#000000',
+        tabBarInactiveTintColor: '#000000',
         tabBarStyle: {
-          backgroundColor: '#000000',
-          borderBlockColor:"#000000",
+          backgroundColor:'#FFFFFF',
+          borderBlockColor:'#FFFFFF',
         },
       })}
 

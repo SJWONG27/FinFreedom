@@ -50,7 +50,7 @@ function BudgetCategory() {
 
     return(
         <ImageBackground
-            source={require('../assets/background.png')}
+        
             style={budgetCategoryStyle.container}
         >
             <ScrollView style={budgetCategoryStyle.container2}>
@@ -257,6 +257,7 @@ function BudgetCategory() {
 const budgetCategoryStyle = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor:'white',
     },
     container2:{
         flex: 1,
@@ -270,7 +271,7 @@ const budgetCategoryStyle = StyleSheet.create({
     },
     container4:{
         marginTop:20,
-        padding:10,
+        padding:5,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -281,20 +282,22 @@ const budgetCategoryStyle = StyleSheet.create({
     },
     message:{
         fontSize:20,
-        color:'#FFFFFF',
+        color:'#000000',
         fontWeight: 'bold',
     },
     pressButton:{
-        backgroundColor: '#d3d3d3',
+        backgroundColor: '#FFFFF0',
         borderRadius: 50,
         height:55,
         width: 55,
         alignItems:'center',
         justifyContent:'center',
+        elevation:4,
     },
     labelButton:{
+        margin:10,
         fontSize:12,
-        color:'#FFFFFF',
+        color:'#000000',
     },
 
     //modal numberpad
@@ -305,7 +308,7 @@ const budgetCategoryStyle = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         padding: 10,
         borderRadius: 10,
         alignItems: 'center',

@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   selectedValues: {
-    color:'#FFFFFF',
+    color:'#000000',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -177,11 +177,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonTextLeave: {
-    color: '#8B0000',
+    color: '#000000',
     fontWeight: 'bold',
   },
   buttonTextConfirm: {
-    color: '#1A43BF',
+    color: '#000000',
     fontWeight: 'bold',
   },
 });

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'black'
+    backgroundColor:'white'
   },
   row: {
     flexDirection: 'row',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 5,
     borderWidth: 0.2,
-    borderColor: '#FFFFFF'
+    borderColor: '#000000'
   },
   buttonLong: {
     alignItems: 'center',
@@ -129,21 +129,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     borderRadius: 5,
     borderWidth: 0.2,
-    borderColor: '#FFFFFF'
+    borderColor: '#000000'
   },
   buttonText: {
     fontSize: 20,
-    color: '#FFFFFF',
+    color: '#000000',
   },
   buttonLongText: {
     fontSize: 20,
     fontWeight:'bold',
-    color: '#1A43BF',
+    color: '#000000',
   },
   amount: {
     fontSize: 24,
     marginBottom: 20,
-    color: '#6A6AFF',
+    color: '#000000',
   },
 });
 
