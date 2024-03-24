@@ -168,6 +168,7 @@ const Points = () => {
           placeholder="Enter points to use"
           placeholderTextColor="grey"
           keyboardType="numeric"
+          color="black"
           value={pointsToUse}
           onChangeText={(text) => setPointsToUse(text)}
         />
