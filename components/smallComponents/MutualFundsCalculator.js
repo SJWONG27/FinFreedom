@@ -167,8 +167,9 @@ const MutualFundsCalculator = () => {
   onPress={() => setModalVisible(true)}
   disabled={!isPremiumUser}
   style={[styles.button, !isPremiumUser && styles.disabledButton]}
-  color={!isPremiumUser ? 'grey' : 'black'} // Change text color based on button state
+  color={!isPremiumUser ? 'black' : 'black'} // Change background color based on button state
   borderRadius={!isPremiumUser ? 20 : 10} // Change border radius based on button state
+  disabledTitleStyle={{ color: 'black' }} // Change text color when disabled
 />
     </View>
   );
@@ -223,16 +224,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color:'black',
   },
-  button: {
-    borderRadius: 20,
-    backgroundColor: 'black', // You can change this color to your preference
-    padding: 10,
-    margin: 10,
-  },
-  disabledButton: {
-    backgroundColor: 'grey',
-    borderRadius:20,
-  },
+  // button: {
+  //   borderRadius: 20,
+  //   backgroundColor: 'grey', // You can change this color to your preference
+  //   padding: 10,
+  //   margin: 10,
+  // },
+  // disabledButton: {
+  //   backgroundColor: 'grey',
+  //   borderRadius:20,
+  // },
 
   resultItem: {
     flexDirection: 'row',
