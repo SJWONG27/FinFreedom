@@ -4,8 +4,8 @@ import StaticBar from './smallComponents/StaticBar';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const dataHome = [
-    { id: '1', title: 'Buy House', info: '250000', amountSaved: '0', imageUrl: require('../assets/image5.png') },
-    { id: '2', title: 'Buy Car', info: '300000', amountSaved: '0', imageUrl: require('../assets/image6.png') },
+    { id: '1', title: 'Buying House', info: '1300', amountSaved: '1000',remainingAmount:'300', imageUrl: require('../assets/image5.png') },
+    { id: '2', title: 'Buying Phone', info: '3600', amountSaved: '1800',remainingAmount:'1800',imageUrl: require('../assets/image6.png') },
     // { id: '3', title: 'Travel to Korea', info: '1500', amountSaved: '0', imageUrl: require('../assets/image7.png') }
 ];
 
@@ -62,7 +62,7 @@ const Discover = () => {
             const remainingAmount = calculateRemainingAmount(newGoalInfo, newAmountSaved);
             console.log("Remaining amount needed:", remainingAmount);
 
-            const newGoal = { id: String(goals.length + 1), title: newGoalTitle, info: newGoalInfo, amountSaved: newAmountSaved, imageUrl: require('../assets/image6.png') };
+            const newGoal = { id: String(goals.length + 1), title: newGoalTitle, info: newGoalInfo, amountSaved: newAmountSaved,remainingAmount:remainingAmount, imageUrl: require('../assets/image6.png') };
             setGoals([...goals, newGoal]);
             setModalVisible(false);
             setNewGoalTitle('');
@@ -86,7 +86,8 @@ const Discover = () => {
     const handleUpdateAmountSaved = (id, amountSaved) => {
         const updatedGoals = goals.map(goal => {
             if (goal.id === id) {
-                return { ...goal, amountSaved };
+                const remainingAmount = '400';
+                return { ...goal, amountSaved, remainingAmount };
             }
             return goal;
         });
@@ -108,39 +109,52 @@ const Discover = () => {
                 <View style={{marginTop:25,}}>
                     {/* Introduction */}
                     <View style={discoverStyle.introContainer}>
-                        <Text style={discoverStyle.introTitle}>Welcome to Financial Goals</Text>
-                        <Text style={discoverStyle.introText}>
+                        <Text style={discoverStyle.introTitle}>Financial Goals</Text>
+                        {/* <Text style={discoverStyle.introText}>
                             Start planning for your financial future by setting SMART goals.
                             Whether it's saving for a house, a car, or a dream vacation,
                             we're here to help you achieve your aspirations.
-                        </Text>
+                        </Text> */}
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={discoverStyle.hintTotalSaved}>Total Saved</Text>
+                        <Text style={discoverStyle.hintThisMonth}>This Month</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={discoverStyle.TotalSaved}>RM 23,293.00</Text>
+                        <Text style={discoverStyle.ThisMonth}>RM 398.00</Text>
+                        </View>
+                        
                     </View>
                     </View>
+                    {goals.map(item => (
+                        
+                <View key={item.id} style={discoverStyle.containerGoal}>
+                
+                    <View style={discoverStyle.textContainer}>
+                        <Text style={discoverStyle.messageGoal}>{item.title}</Text>
+                        <Text style={discoverStyle.messageReach}>RM {item.amountSaved}</Text>
+                        <Text style={discoverStyle.messageTarget}>Left RM {item.remainingAmount}</Text>
+                        
+                    </View>
+                    <StaticBar percentage={(parseFloat(item.amountSaved) / parseFloat(item.info)) * 100} />
+                    <Pressable
+                        onPress={() => {
+                            const newAmount = prompt('Enter new amount saved:');
+                            if (newAmount !== null) {
+                                handleUpdateAmountSaved(item.id, newAmount);
+                            }
+                        }}
+                    >
+                        <Text>Edit</Text>
+                    </Pressable>
+                    
+                    
+                </View>
+            ))}
             <ScrollView>
-                <View style={{marginTop:0,}}>
-                    <FlatList
-                        style={{ margin: 10, marginTop: 30 }}
-                        data={goals}
-                        horizontal
-                        renderItem={({ item }) => (
-                            <Item
-                                id={item.id}
-                                title={item.title}
-                                info={item.info}
-                                amountSaved={item.amountSaved}
-                                imageUrl={item.imageUrl}
-                                onDelete={handleDeleteGoal}
-                                onUpdateAmountSaved={handleUpdateAmountSaved}
-                            />
-                        )}
-                        keyExtractor={item => item.id}
-                        showsHorizontalScrollIndicator={false}
-                        snapToInterval={139}
-                        decelerationRate="fast"
-                        indicatorStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
-                    />
+                <View style={{marginTop:0,backgroundColor:'white'}}>
                     <Text style={discoverStyle.reminder}>Maximum 3 goals could be added</Text>
-                    {goals.length < 3 && (
+                    {goals.length < 5 && (
                         <Pressable onPress={addGoal} style={discoverStyle.addGoalButton}>
                             <Text style={discoverStyle.addGoalButtonText}>Add Goal</Text>
                         </Pressable>
@@ -192,7 +206,7 @@ const Discover = () => {
                 </View>
             </ScrollView>
             {/* Goal Setting Tips */}
-            <View style={discoverStyle.tipsContainer}>
+             <View style={discoverStyle.tipsContainer}>
                         <Text style={discoverStyle.tipsTitle}>Goal Setting Tips</Text>
                         <Text style={discoverStyle.tip}>
                             1. Be Specific: Clearly define your financial goals, including the amount you want to save and the timeframe.
@@ -349,6 +363,7 @@ const discoverStyle = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign:'center',
     },
     introText: {
         color: '#000000',
@@ -374,6 +389,93 @@ const discoverStyle = StyleSheet.create({
         fontSize: 16,
         marginBottom: 5,
     },
+    hintTotalSaved: {
+        fontSize: 14,
+        marginTop:'2%',
+        marginLeft:'15%',
+        color: 'rgba(0, 0, 0, 0.5)', // Adjust the color to your preference
+      },
+      hintThisMonth: {
+        fontSize: 14,
+        marginTop:'2%',
+        marginRight:'15%',
+        color: 'rgba(0, 0, 0, 0.5)', // Adjust the color to your preference
+      },
+      TotalSaved: {
+        fontSize: 20,
+        marginTop:'2%',
+        marginLeft:'7%',
+      },
+     ThisMonth: {
+        fontSize: 20,
+        marginTop:'2%',
+        marginRight:'10.5%',
+      },
+      messageGoal: {
+        color: '#000000',
+        fontSize: 18,
+        marginBottom:20,
+        fontWeight:'bold',
+        
+    },
+    messageReach:{
+      fontSize: 18,
+      marginBottom:20,
+      fontWeight:'bold',
+      color: 'green',
+      marginLeft:120,
+    },
+    messageTarget:{
+      marginTop:11,
+      marginLeft:-79,
+      color: '#001800',
+      opacity: 0.5,
+      fontStyle: 'italic',
+      fontSize: 12,
+      
+  },
+  containerGoal: {
+    marginTop:10,
+    padding:13,
+      alignItems: 'left',
+      margin: 5,
+
+      textAlign:'center',
+      marginHorizontal:28,
+       backgroundColor: '#ffffff',
+       borderRadius: 10,
+       shadowOffset: {
+         width: 0,
+         height: 2,
+     },
+     shadowOpacity: 0.25,
+     shadowRadius: 3.84,
+     elevation: 10,
+    
+  },
+  containerFollowGoal: {
+    marginTop:30,
+    padding:13,
+      alignItems: 'left',
+      margin: 5,
+      textAlign:'center',
+      marginHorizontal:28,
+       backgroundColor: '#ffffff',
+       borderRadius: 10,
+       shadowOffset: {
+         width: 0,
+         height: 2,
+     },
+     shadowOpacity: 0.25,
+     shadowRadius: 3.84,
+     elevation: 10,
+    
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
+
 
 export default Discover;
