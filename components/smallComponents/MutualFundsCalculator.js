@@ -1,0 +1,195 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, Modal, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { usePremiumStatus } from '../Premium';
+
+// Define fixed parameters based on the type of mutual funds or investment strategy
+const mutualFundsData = [
+  { name: 'Public Mutual Fund', processingFee: 1.5, annualReturnRate: 8 },
+  { name: 'CIMB-Principal Mutual Fund', processingFee: 2, annualReturnRate: 7 },
+  { name: 'Maybank Mutual Fund', processingFee: 1.8, annualReturnRate: 9 },
+  { name: 'Affin Hwang Mutual Fund', processingFee: 1.7, annualReturnRate: 7.5 },
+  { name: 'Kenanga Investors Mutual Fund', processingFee: 2.2, annualReturnRate: 8.5 },
+  { name: 'RHB Asset Management Mutual Fund', processingFee: 1.6, annualReturnRate: 9.2 },
+];
+
+
+const MutualFundsCalculator = () => {
+  const [initialInvestment, setInitialInvestment] = useState('');
+  const [investmentDuration, setInvestmentDuration] = useState('');
+  const [selectedMutualFund, setSelectedMutualFund] = useState(mutualFundsData[0]);
+  const [futureValue, setFutureValue] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const { isPremiumUser } = usePremiumStatus();
+
+  const calculateFutureValue = () => {
+    // Convert initial investment and duration input to numbers
+    const initialInvestmentValue = parseFloat(initialInvestment);
+    const duration = parseInt(investmentDuration);
+
+    if (isNaN(initialInvestmentValue) || isNaN(duration)) {
+      alert('Please enter valid numbers for Initial Investment and Investment Duration.');
+      return;
+    }
+
+    // Retrieve selected mutual fund parameters
+    const { processingFee, annualReturnRate } = selectedMutualFund;
+
+    // Perform calculation
+    // Future Value = P * (1 + r)^n
+    const r = annualReturnRate / 100; // Convert percentage to decimal
+    const n = duration;
+    const futureValueWithoutFee = initialInvestmentValue * Math.pow((1 + r), n);
+    const processingFeeAmount = (processingFee / 100) * futureValueWithoutFee;
+    const futureValueWithFee = futureValueWithoutFee - processingFeeAmount;
+
+    // Calculate returns and adjusted returns
+    const returns = futureValueWithFee - initialInvestmentValue;
+    const adjustedReturns = returns - processingFeeAmount;
+    const annualizedReturn = (Math.pow((futureValueWithFee / initialInvestmentValue), (1 / duration)) - 1) * 100;
+
+    setFutureValue({
+      returns: returns.toFixed(2), // Round to 2 decimal places
+      adjustedReturns: adjustedReturns.toFixed(2), // Round to 2 decimal places
+      annualizedReturn: annualizedReturn.toFixed(2), // Round to 2 decimal places
+    });
+    setModalVisible(true); // Show the modal after calculating future value
+  };
+
+  useEffect(() => {
+    // Call the calculation function whenever initial investment or duration changes
+    if (initialInvestment !== '' && investmentDuration !== '') {
+      calculateFutureValue();
+    }
+  }, [initialInvestment, investmentDuration]);
+
+  return (
+    <View style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalBackground}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContainer}>
+                <Text style={styles.modalTitle}>Mutual Funds Calculator</Text>
+
+                <Text>Initial Investment Amount:</Text>
+                <TextInput
+                  style={styles.input}
+                  value={initialInvestment}
+                  onChangeText={setInitialInvestment}
+                  keyboardType="numeric"
+                />
+
+                <Text>Investment Duration (in years):</Text>
+                <TextInput
+                  style={styles.input}
+                  value={investmentDuration}
+                  onChangeText={setInvestmentDuration}
+                  keyboardType="numeric"
+                />
+
+                <Text>Mutual Fund:</Text>
+                <Picker
+                  selectedValue={selectedMutualFund}
+                  onValueChange={(itemValue, itemIndex) => setSelectedMutualFund(itemValue)}
+                >
+                  {mutualFundsData.map((fund, index) => (
+                    <Picker.Item key={index} label={fund.name} value={fund} />
+                  ))}
+                </Picker>
+
+                <View style={styles.fixedValuesContainer}>
+                  <Text style={styles.fixedValueText}>
+                    Processing Fee: {selectedMutualFund.processingFee}%
+                  </Text>
+                  <Text style={styles.fixedValueText}>
+                    Annual Return Rate: {selectedMutualFund.annualReturnRate}%
+                  </Text>
+                </View>
+
+                <View style={styles.resultContainer}>
+                  <Text style={styles.resultTitle}>Results:</Text>
+                  <Text>Returns: RM {futureValue?.returns || 0}</Text>
+                  <Text>Adjusted Returns: RM {futureValue?.adjustedReturns || 0}</Text>
+                  <Text>Annualized Return: {futureValue?.annualizedReturn || 0}%</Text>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      <Button
+        title={isPremiumUser ? "Mutual Funds Benefit Calculator" : "Unlock Premium to use Mutual Funds Benefit Calculator"}
+        onPress={() => setModalVisible(true)}
+        disabled={!isPremiumUser} // Disable button if user is not a premium user
+        style={[styles.button, !isPremiumUser && styles.disabledButton]}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+  fixedValuesContainer: {
+    marginBottom: 10,
+  },
+  fixedValueText: {
+    marginBottom: 5,
+    color: 'gray', // Fixed value text color
+  },
+  resultContainer: {
+    marginTop: 20,
+  },
+  resultTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  button: {
+    borderRadius: 10,
+    backgroundColor: 'blue', // You can change this color to your preference
+    padding: 10,
+    margin: 10,
+  },
+  disabledButton: {
+    backgroundColor: 'grey',
+  },
+});
+
+export default MutualFundsCalculator;

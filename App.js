@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {View} from 'react-native';
 import { FIREBASE_AUTH } from './firebase';
 import Points from './components/Points';
+import { PremiumProvider } from './components/Premium';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -60,6 +61,7 @@ const MainAppNavigator = () => {
 const App = () => {
   return (
     <View style={{flex:1}}>
+    <PremiumProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
@@ -69,6 +71,7 @@ const App = () => {
         <Stack.Screen name="Points" component={Points} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </PremiumProvider>
     </View>
   );
 };

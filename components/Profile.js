@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Pressable, Image, TextInput, Modal } from 'react-native';
 import { firebaseAuth } from '../firebase';
 import * as ImagePicker from 'expo-image-picker';
+import { usePremiumStatus } from './Premium';
 
 const defaultProfileImage = require('../assets/profileimg.jpg');
 
@@ -14,6 +15,7 @@ function Profile({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const { isPremiumUser, togglePremiumStatus } = usePremiumStatus();
 
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(user => {
@@ -69,6 +71,13 @@ function Profile({ navigation }) {
     setModalVisible(null);
   }
 
+  const handleBuyPremium = () => {
+    // Logic for purchasing premium
+    // After successful purchase, toggle premium status
+    togglePremiumStatus();
+    setModalVisible('buyPremium'); // Close the modal after purchasing premium
+  };
+
   return (
     <ImageBackground
       source={require('../assets/background.png')}
@@ -92,6 +101,9 @@ function Profile({ navigation }) {
           </Pressable>
           <Pressable style={profileStyle.button} onPress={handleChangePassword}>
             <Text style={profileStyle.buttonText}>Change Password</Text>
+          </Pressable>
+          <Pressable style={profileStyle.button} onPress={handleBuyPremium}>
+            <Text style={profileStyle.buttonText}>Buy Premium</Text>
           </Pressable>
           <Pressable style={profileStyle.button} onPress={handleAbout}>
             <Text style={profileStyle.buttonText}>About</Text>
@@ -182,6 +194,44 @@ function Profile({ navigation }) {
           </View>
         </Pressable>
       </Modal>
+      <Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible === 'buyPremium'}
+  onRequestClose={() => {
+    setModalVisible(null);
+  }}
+>
+  <Pressable
+    style={profileStyle.modalBackground}
+    onPress={() => setModalVisible(null)}
+  >
+    <View style={profileStyle.modalContainer}>
+      <View style={profileStyle.modalContent}>
+        {isPremiumUser ? (
+          <>
+            <Text style={profileStyle.modalTitle}>Premium Unlocked!</Text>
+            <Pressable style={profileStyle.buttonEP} onPress={() => setModalVisible(null)}>
+              <Text style={profileStyle.buttonTextEP}>OK</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <Text style={profileStyle.modalTitle}>Buy Premium</Text>
+            <Text style={profileStyle.modalText}>
+              Upgrade to premium to unlock exclusive features!
+            </Text>
+            <Pressable style={profileStyle.buttonEP} onPress={handleBuyPremium}>
+              <Text style={profileStyle.buttonTextEP}>Buy Premium</Text>
+            </Pressable>
+          </>
+        )}
+      </View>
+    </View>
+  </Pressable>
+</Modal>
+
+
       <Modal
         animationType="slide"
         transparent={true}
