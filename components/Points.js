@@ -166,7 +166,7 @@ const Points = () => {
         <TextInput
           style={pointStyle.input}
           placeholder="Enter points to use"
-          placeholderTextColor="black"
+          placeholderTextColor="grey"
           keyboardType="numeric"
           value={pointsToUse}
           onChangeText={(text) => setPointsToUse(text)}
@@ -327,12 +327,12 @@ const pointStyle = StyleSheet.create({
     input: {
       width: '80%',
       borderWidth: 1,
-      borderColor: 'gray',
+      borderColor: 'grey',
       borderRadius: 5,
       padding: 10,
       marginBottom: 20,
       color:'white',
-      backgroundColor:"silver",
+      backgroundColor:"white",
     },
     button: {
       backgroundColor: 'black',
@@ -407,7 +407,7 @@ const pointStyle = StyleSheet.create({
       alignItems: 'center'
     },
     dropdown: {
-      backgroundColor: 'silver', // Background color of the dropdown
+      backgroundColor: 'white', // Background color of the dropdown
       borderWidth: 1, // Border width
       borderRadius: 5, // Border radius
       borderColor: 'grey', // Border color
@@ -507,7 +507,7 @@ const pointStyle = StyleSheet.create({
       },
 
       tipsContainer: {
-        backgroundColor: 'silver',
+        backgroundColor: 'transparent',
         borderRadius: 10,
         padding: 20,
         marginBottom: 20,

@@ -384,14 +384,13 @@ const homeStyle = StyleSheet.create({
   },
     container2: {
         flex: 1,
-       
         backgroundColor:'#FFFFFF',
     },
     container3: {
         flex: 0.25,
         flexDirection: 'row',
-       marginTop:30,
-       marginLeft:10,
+        marginTop:60,
+        marginLeft:10,
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
         width:'100%'
