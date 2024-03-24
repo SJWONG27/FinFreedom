@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, Modal, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TextInput, Button, Modal, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
 import { usePremiumStatus } from '../Premium';
 
@@ -63,6 +64,11 @@ const MutualFundsCalculator = () => {
     }
   }, [initialInvestment, investmentDuration]);
 
+  const showDescription = (description) => {
+    // Implement logic to display description
+    alert(`${description}`);
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -77,33 +83,19 @@ const MutualFundsCalculator = () => {
               <View style={styles.modalContainer}>
                 <Text style={styles.modalTitle}>Mutual Funds Calculator</Text>
 
-                <Text>Initial Investment Amount:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={initialInvestment}
-                  onChangeText={setInitialInvestment}
-                  keyboardType="numeric"
-                />
-
-                <Text>Investment Duration (in years):</Text>
-                <TextInput
-                  style={styles.input}
-                  value={investmentDuration}
-                  onChangeText={setInvestmentDuration}
-                  keyboardType="numeric"
-                />
-
                 <Text>Mutual Fund:</Text>
-                <Picker
-                  selectedValue={selectedMutualFund}
-                  onValueChange={(itemValue, itemIndex) => setSelectedMutualFund(itemValue)}
-                >
-                  {mutualFundsData.map((fund, index) => (
-                    <Picker.Item key={index} label={fund.name} value={fund} />
-                  ))}
-                </Picker>
-
-                <View style={styles.fixedValuesContainer}>
+                <View style={styles.pickerContainer}>
+  <Picker
+    selectedValue={selectedMutualFund}
+    onValueChange={(itemValue, itemIndex) => setSelectedMutualFund(itemValue)}
+    style={{ backgroundColor: 'lightgray', borderRadius: 5 }} // Apply borderRadius here
+  >
+    {mutualFundsData.map((fund, index) => (
+      <Picker.Item key={index} label={fund.name} value={fund} />
+    ))}
+  </Picker>
+</View>
+<View style={styles.fixedValuesContainer}>
                   <Text style={styles.fixedValueText}>
                     Processing Fee: {selectedMutualFund.processingFee}%
                   </Text>
@@ -111,13 +103,59 @@ const MutualFundsCalculator = () => {
                     Annual Return Rate: {selectedMutualFund.annualReturnRate}%
                   </Text>
                 </View>
+                
+                <Text><TouchableOpacity onPress={() => showDescription('This is the duration for which you plan to keep your investment in the mutual fund, expressed in years.')}>
+      <FontAwesome name="question-circle" size={20} color="black" />
+    </TouchableOpacity>  Initial Investment Amount: </Text>
+                <TextInput
+                  style={styles.input}
+                  value={initialInvestment}
+                  onChangeText={setInitialInvestment}
+                  keyboardType="numeric"
+                />
 
-                <View style={styles.resultContainer}>
-                  <Text style={styles.resultTitle}>Results:</Text>
-                  <Text>Returns: RM {futureValue?.returns || 0}</Text>
-                  <Text>Adjusted Returns: RM {futureValue?.adjustedReturns || 0}</Text>
-                  <Text>Annualized Return: {futureValue?.annualizedReturn || 0}%</Text>
-                </View>
+                <Text><TouchableOpacity onPress={() => showDescription('This is the amount of money you initially invest in the mutual fund.')}>
+      <FontAwesome name="question-circle" size={20} color="black" />
+    </TouchableOpacity>  Investment Duration (in years):</Text>
+                <TextInput
+                  style={styles.input}
+                  value={investmentDuration}
+                  onChangeText={setInvestmentDuration}
+                  keyboardType="numeric"
+                />
+
+            
+
+<View style={styles.resultContainer}>
+  <Text style={styles.resultTitle}>Results:</Text>
+  <View style={styles.resultItem}>
+    <View style={styles.resultLabelContainer}>
+    <TouchableOpacity onPress={() => showDescription('Returns represent the total profit or loss from your investment, excluding any fees.')}>
+        <FontAwesome name="question-circle" size={20} color="black" />
+      </TouchableOpacity>
+      <Text style={styles.resultLabel}> Returns: </Text>
+    </View>
+    <Text style={{fontWeight:'bold'}}>RM {futureValue?.returns || 0}</Text>
+  </View>
+  <View style={styles.resultItem}>
+    <View style={styles.resultLabelContainer}>
+    <TouchableOpacity onPress={() => showDescription('Adjusted returns are the total profit or loss from your investment, accounting for any fees or expenses incurred.')}>
+        <FontAwesome name="question-circle" size={20} color="black" />
+      </TouchableOpacity>
+      <Text style={styles.resultLabel}> Adjusted Returns:</Text>
+    </View>
+    <Text style={{fontWeight:'bold'}}>RM {futureValue?.adjustedReturns || 0}</Text>
+  </View>
+  <View style={styles.resultItem}>
+    <View style={styles.resultLabelContainer}>
+    <TouchableOpacity onPress={() => showDescription('Annualized return is the average rate of return per year on your investment over its entire duration.')}>
+        <FontAwesome name="question-circle" size={20} color="black" />
+      </TouchableOpacity>
+      <Text style={styles.resultLabel}> Annualized Return: </Text>
+    </View>
+    <Text style={{fontWeight:'bold'}}>{futureValue?.annualizedReturn || 0}%</Text>
+  </View>
+</View>
               </View>
             </TouchableWithoutFeedback>
           </View>
@@ -125,11 +163,13 @@ const MutualFundsCalculator = () => {
       </Modal>
 
       <Button
-        title={isPremiumUser ? "Mutual Funds Benefit Calculator" : "Unlock Premium to use Mutual Funds Benefit Calculator"}
-        onPress={() => setModalVisible(true)}
-        disabled={!isPremiumUser} // Disable button if user is not a premium user
-        style={[styles.button, !isPremiumUser && styles.disabledButton]}
-      />
+  title={isPremiumUser ? "Mutual Funds Benefit Calculator" : "Unlock Premium to use Mutual Funds Benefit Calculator"}
+  onPress={() => setModalVisible(true)}
+  disabled={!isPremiumUser}
+  style={[styles.button, !isPremiumUser && styles.disabledButton]}
+  color={!isPremiumUser ? 'grey' : 'black'} // Change text color based on button state
+  borderRadius={!isPremiumUser ? 20 : 10} // Change border radius based on button state
+/>
     </View>
   );
 };
@@ -151,6 +191,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     elevation: 5,
+    width:300,
   },
   modalTitle: {
     fontSize: 18,
@@ -180,15 +221,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'black',
   },
   button: {
-    borderRadius: 10,
-    backgroundColor: 'blue', // You can change this color to your preference
+    borderRadius: 20,
+    backgroundColor: 'black', // You can change this color to your preference
     padding: 10,
     margin: 10,
   },
   disabledButton: {
     backgroundColor: 'grey',
+    borderRadius:20,
+  },
+
+  resultItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  resultLabelContainer: {
+    flexDirection: 'row',
+    marginRight: 10,
+  },
+  resultLabel: {
+    marginRight: 5,
   },
 });
 
