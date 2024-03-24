@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Login from './components/Login';
+import LandingPage1 from './components/LandingPage1';
+import LandingPage2 from './components/LandingPage2';
+import LandingPage3 from './components/LandingPage3';
 import Register from './components/Register';
 import Landing from './components/Landing';
 import Home from './components/Home';
@@ -63,6 +66,9 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage1" component={LandingPage1} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage2" component={LandingPage2} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage3" component={LandingPage3} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Stack.Screen name="MainApp" component={MainAppNavigator} options={{ headerShown: false }} /> 
