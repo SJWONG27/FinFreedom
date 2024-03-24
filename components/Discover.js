@@ -140,7 +140,10 @@ const Discover = () => {
         </Pressable>
     </View>
 ))}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0ffe6e44e4e98a343daaa36002b7039b2ecf3865
             <ScrollView>
                 <View style={{marginTop:0,backgroundColor:'white'}}>
                     <Text style={discoverStyle.reminder}>Maximum 3 goals could be added</Text>
@@ -330,9 +333,13 @@ const discoverStyle = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+<<<<<<< HEAD
     deleteButton: {
         
     },
+=======
+    
+>>>>>>> 0ffe6e44e4e98a343daaa36002b7039b2ecf3865
     deleteButtonText: {
         color: 'white',
         fontSize: 14,
