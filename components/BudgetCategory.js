@@ -262,7 +262,7 @@ const budgetCategoryStyle = StyleSheet.create({
     container2:{
         flex: 1,
         marginTop:40,
-        paddingHorizontal:10,
+        paddingHorizontal:30,
 
     },
     container3:{
@@ -345,7 +345,7 @@ const budgetCategoryStyle = StyleSheet.create({
         textAlign: 'center',
     },
     okButton: {
-        backgroundColor: '#1A43BF',
+        backgroundColor: '#000000',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,

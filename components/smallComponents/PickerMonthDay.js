@@ -177,11 +177,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonTextLeave: {
-    color: '#000000',
+    color: '#8B0000',
     fontWeight: 'bold',
   },
   buttonTextConfirm: {
-    color: '#000000',
+    color: '#1A43BF',
     fontWeight: 'bold',
   },
 });

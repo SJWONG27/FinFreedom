@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Pressable, 
 import PointsCircle from '../components/smallComponents/PointsCircle';
 import NewsItem from '../components/smallComponents/NewsItem';
 import { useNavigation } from '@react-navigation/native';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
+import Points from './Points'
+import StaticBar from '../components/smallComponents/StaticBar';
+
 import Svg, {
   G,
   Rect,
@@ -306,7 +310,7 @@ function Home({ isLoggedIn }) {
                   {!isPremiumUser && (
                     <>
                       {'\n'}
-                      <Text style={homeStyle.hintText}>Unlock Premium to use this feature</Text>
+                      <Text style={homeStyle.hintText}>Unlock Premium to Use This Feature</Text>
                     </>
                   )}
                 </Text>
@@ -335,7 +339,7 @@ function Home({ isLoggedIn }) {
                 </View>
               </View>
             </Modal>
-            <Text style={{marginLeft:20,marginTop:30,fontSize:25,fontWeight:'bold'}}>Goals</Text>
+            <Text style={{marginLeft:20,marginTop:15,fontSize:25,fontWeight:'bold'}}>Goals</Text>
                     </View>
                    
                     <View style={homeStyle.containerGoal}>
@@ -512,9 +516,10 @@ const homeStyle = StyleSheet.create({
        
     },
     profileImage: {
-        width: 100,
-        height: 100,
+        width: 80,
+        height: 80,
         borderRadius: 50, 
+        marginLeft:20,
       
     
     
@@ -655,6 +660,34 @@ expenses: {
 // opacity:0.8,
 textAlign: 'center',
 
+},
+disabledButton: {
+  backgroundColor: 'grey',
+  textAlign: 'center',
+},
+buttonContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  textAlign: 'center',
+  marginLeft: 45,
+},
+lockIconContainer: {
+  marginRight: 10,
+},
+lockIcon: {
+  width: 40,
+  height: 40,
+  // Add any other styles you need for the lock icon
+},
+buttonText: {
+  color: 'white',
+  fontSize: 16,
+  textAlign: 'center',
+},
+
+hintText: {
+  fontSize: 12,
+  color: 'rgba(255, 255, 255, 0.5)', // Adjust the color to your preference
 },
   });
 
