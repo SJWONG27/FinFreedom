@@ -38,7 +38,7 @@ const MainAppNavigator = () => {
             iconName = focused ? 'calculator' : 'calculator-outline';
           } else if (route.name === 'Add button') {
             iconName = 'add-circle-outline';
-          } else if (route.name === 'Discover') {
+          } else if (route.name === 'Goals') {
             iconName = focused ? 'planet' : 'planet-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person-circle' : 'person-circle-outline';
@@ -58,7 +58,7 @@ const MainAppNavigator = () => {
       <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Tab.Screen name="Budget" component={Budget} options={{ headerShown: false }}/>
       <Tab.Screen name="Add button" component={BudgetCategory} options={{ headerShown: false,  tabBarLabel: ''  }}/>
-      <Tab.Screen name="Discover" component={Discover} options={{ headerShown: false }} />
+      <Tab.Screen name="Goals" component={Discover} options={{ headerShown: false }} />
       <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
   );
