@@ -11,6 +11,7 @@ import Svg, {
     Stop,
     ClipPath,
   } from "react-native-svg"
+import MutualFundsCalculator from '../components/smallComponents/MutualFundsCalculator';
 
 const Points = () => {
   const navigation = useNavigation();
@@ -154,6 +155,9 @@ const Points = () => {
       </ClipPath>
     </Defs>
   </Svg>
+  <View style={{marginBottom:20,}}>
+    <MutualFundsCalculator/>
+  </View>
       <View style={pointStyle.content}>
         <Text style={pointStyle.title}>Use Points to Buy Mutual Funds</Text>
         {/* Dropdown for selecting predefined points */}

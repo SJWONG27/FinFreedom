@@ -1,57 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Pressable, TouchableOpacity, Linking, Modal} from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, Pressable, TouchableOpacity, Linking, Modal } from 'react-native';
 import PointsCircle from '../components/smallComponents/PointsCircle';
-import StaticBar from '../components/smallComponents/StaticBar';
 import NewsItem from '../components/smallComponents/NewsItem';
-import { ViewPropTypes } from 'deprecated-react-native-prop-types';
-import Points from './Points'
 import { useNavigation } from '@react-navigation/native';
 import Svg, {
-    G,
-    Rect,
-    Path,
-    Defs,
-    LinearGradient,
-    Stop,
-    ClipPath,
-  } from "react-native-svg"
+  G,
+  Rect,
+  Path,
+  Defs,
+  LinearGradient,
+  Stop,
+  ClipPath,
+} from "react-native-svg"
 import FinancialQuestionsPopup from './smallComponents/FinancialQuestionsPopUp';
+import { usePremiumStatus } from '../components/Premium';
 
 
 function Home({ isLoggedIn }) {
-    // Assuming income and expenses are retrieved from some source
-    const income = 5000;
-    const expenses = 2340.40;
+  // Assuming income and expenses are retrieved from some source
+  const income = 5000;
+  const expenses = 2340.40;
 
-    // State to manage visibility of the financial questions popup
-    const [showFinancialQuestions, setShowFinancialQuestions] = useState(true);
-    const [answerResult, setAnswerResult] = useState(null);
-    const [answered, setAnswered] = useState(false);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [budgetSuggestions, setBudgetSuggestions] = useState([]);
+  // State to manage visibility of the financial questions popup
+  const [showFinancialQuestions, setShowFinancialQuestions] = useState(true);
+  const [answerResult, setAnswerResult] = useState(null);
+  const [answered, setAnswered] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [budgetSuggestions, setBudgetSuggestions] = useState([]);
+  const { isPremiumUser } = usePremiumStatus();
 
-    // Effect to show the financial questions popup when the user is logged in
-    useEffect(() => {
-        if (isLoggedIn) {
-            setShowFinancialQuestions(true);
-        }
-    }, [isLoggedIn]);
+  // Effect to show the financial questions popup when the user is logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowFinancialQuestions(true);
+    }
+  }, [isLoggedIn]);
 
-    // Function to handle the user's answer to financial questions
-    const handleAnswer = (answer) => {
-        // Handle the user's answer here
-        // You can update points or perform any other action based on the answer
-        console.log('User selected answer:', answer);
-        setAnswered(true);
-        // Close the financial questions popup
-        setShowFinancialQuestions(false);
-        
-    };
+  // Function to handle the user's answer to financial questions
+  const handleAnswer = (answer) => {
+    // Handle the user's answer here
+    // You can update points or perform any other action based on the answer
+    console.log('User selected answer:', answer);
+    setAnswered(true);
+    // Close the financial questions popup
+    setShowFinancialQuestions(false);
 
-    // Function to handle exiting the financial questions popup
-    const handleExit = () => {
-      // Close the financial questions popup without confirmation
-      setShowFinancialQuestions(false);
+  };
+
+  // Function to handle exiting the financial questions popup
+  const handleExit = () => {
+    // Close the financial questions popup without confirmation
+    setShowFinancialQuestions(false);
   };
 
   const handleConfirm = (selectedAnswer) => {
@@ -60,89 +59,89 @@ function Home({ isLoggedIn }) {
     console.log('Confirmed answer:', selectedAnswer);
     // Close the financial questions popup
     setShowFinancialQuestions(false);
-};
+  };
 
-const handleRightAnswer = () => {
-  setAnswerResult('Correct');
-  setAnswered(true);
-  setShowFinancialQuestions(false);
-};
+  const handleRightAnswer = () => {
+    setAnswerResult('Correct');
+    setAnswered(true);
+    setShowFinancialQuestions(false);
+  };
 
-// Function to handle a wrong answer
-const handleWrongAnswer = () => {
-  setAnswered(true);
-  setAnswerResult('Wrong');
-};
+  // Function to handle a wrong answer
+  const handleWrongAnswer = () => {
+    setAnswered(true);
+    setAnswerResult('Wrong');
+  };
 
-const handleAcknowledgeResult = () => {
-  setAnswerResult(null);
-};
+  const handleAcknowledgeResult = () => {
+    setAnswerResult(null);
+  };
 
-const handlePress = () => {
-  // Set setfinancialquestionspopup to true when the Pressable is pressed
-  setShowFinancialQuestions(true);
-};
+  const handlePress = () => {
+    // Set setfinancialquestionspopup to true when the Pressable is pressed
+    setShowFinancialQuestions(true);
+  };
 
-const enabledButtonStyle = {
-  marginLeft: 20,
-};
-const disabledButtonStyle = {
-  marginLeft: 20,
-  opacity: 0.5, // Reduce opacity to indicate the disabled state
-  // You can also change the background color or any other style properties to visually indicate the disabled state
-};
-// Calculate balance
-const balance = income - expenses;
+  const enabledButtonStyle = {
+    marginLeft: 20,
+  };
+  const disabledButtonStyle = {
+    marginLeft: 20,
+    opacity: 0.5, // Reduce opacity to indicate the disabled state
+    // You can also change the background color or any other style properties to visually indicate the disabled state
+  };
+  // Calculate balance
+  const balance = income - expenses;
 
-const handleAIBudgetSuggestion = () => {
-  // Calculate remaining balance after deducting expenses
-  const remainingBalance = balance;
+  const handleAIBudgetSuggestion = () => {
+    // Calculate remaining balance after deducting expenses
+    const remainingBalance = balance;
 
-  // Define an array to store budget suggestions
-  let budgetSuggestions = [];
+    // Define an array to store budget suggestions
+    let budgetSuggestions = [];
 
-  // Check the remaining balance and provide personalized suggestions
-  if (remainingBalance > 0) {
-    if (remainingBalance >= 200) {
-      budgetSuggestions.push({ 
-        category: 'Emergency Fund', 
-        suggestion: `It's important to have an emergency fund regardless of your income level. Allocate some of your remaining balance to start building this fund. Even setting aside RM 50 per month can provide a safety net for unexpected expenses.` 
+    // Check the remaining balance and provide personalized suggestions
+    if (remainingBalance > 0) {
+      if (remainingBalance >= 200) {
+        budgetSuggestions.push({
+          category: 'Emergency Fund',
+          suggestion: `It's important to have an emergency fund regardless of your income level. Allocate some of your remaining balance to start building this fund. Even setting aside RM 50 per month can provide a safety net for unexpected expenses.`
+        });
+      }
+      if (remainingBalance >= 1000 && remainingBalance <= 2999) {
+        budgetSuggestions.push({
+          category: 'Car Fund',
+          suggestion: `Given your current balance, you might want to start saving for a car. Setting aside RM 200-300 per month can help you reach a down payment goal within a few years.`
+        });
+      }
+      if (remainingBalance >= 3000 && remainingBalance <= 4999) {
+        budgetSuggestions.push({
+          category: 'House Fund',
+          suggestion: `With your current balance, you could start saving for a down payment on a house. Aim to set aside RM 500-800 per month to reach your goal within 5-10 years.`
+        });
+      }
+      if (remainingBalance >= 5000 && remainingBalance <= 9999) {
+        budgetSuggestions.push({
+          category: 'Investment Fund',
+          suggestion: `Given your balance, it might be wise to consider investing for the future. Explore options such as low-cost index funds or retirement accounts to help grow your wealth over time.`
+        });
+      }
+      if (remainingBalance >= 10000) {
+        budgetSuggestions.push({
+          category: 'Financial Freedom',
+          suggestion: `Wow! With your current balance, you have some exciting opportunities ahead. Think about how you can use this money to work for you, whether it's through investments, starting a business, or other ventures.`
+        });
+      }
+    } else {
+      // If remaining balance is negative, suggest reducing spending by 20%
+      budgetSuggestions.push({
+        category: 'Spending',
+        suggestion: 'It looks like your expenses have exceeded your income for the month. Consider reviewing your expenses and finding ways to cut back on non-essential purchases to avoid accumulating more debt.'
       });
     }
-    if (remainingBalance >= 1000 && remainingBalance <= 2999) {
-      budgetSuggestions.push({ 
-        category: 'Car Fund', 
-        suggestion: `Given your current balance, you might want to start saving for a car. Setting aside RM 200-300 per month can help you reach a down payment goal within a few years.` 
-      });
-    }
-    if (remainingBalance >= 3000 && remainingBalance <= 4999) {
-      budgetSuggestions.push({ 
-        category: 'House Fund', 
-        suggestion: `With your current balance, you could start saving for a down payment on a house. Aim to set aside RM 500-800 per month to reach your goal within 5-10 years.` 
-      });
-    }
-    if (remainingBalance >= 5000 && remainingBalance <= 9999) {
-      budgetSuggestions.push({ 
-        category: 'Investment Fund', 
-        suggestion: `Given your balance, it might be wise to consider investing for the future. Explore options such as low-cost index funds or retirement accounts to help grow your wealth over time.` 
-      });
-    }
-    if (remainingBalance >= 10000) {
-      budgetSuggestions.push({ 
-        category: 'Financial Freedom', 
-        suggestion: `Wow! With your current balance, you have some exciting opportunities ahead. Think about how you can use this money to work for you, whether it's through investments, starting a business, or other ventures.` 
-      });
-    }
-  } else {
-    // If remaining balance is negative, suggest reducing spending by 20%
-    budgetSuggestions.push({ 
-      category: 'Spending', 
-      suggestion: 'It looks like your expenses have exceeded your income for the month. Consider reviewing your expenses and finding ways to cut back on non-essential purchases to avoid accumulating more debt.' 
-    });
-  }
 
-  // Set the budget suggestions
-  setBudgetSuggestions(budgetSuggestions);
+    // Set the budget suggestions
+    setBudgetSuggestions(budgetSuggestions);
 
   // Show the modal with budget suggestions
   setIsModalVisible(true);
@@ -150,7 +149,7 @@ const handleAIBudgetSuggestion = () => {
 
 
 
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
     return (
         <ImageBackground
@@ -295,28 +294,46 @@ const handleAIBudgetSuggestion = () => {
                 style={[homeStyle.button]}
                 onPress={handleAIBudgetSuggestion}
             >
-                <Text style={homeStyle.buttonText}>AI Budget Suggestion</Text>
-            </Pressable>
-            <Modal
-                visible={isModalVisible}
-                animationType="slide"
-                transparent={true}
-            >
-                <View style={homeStyle.modalContainer}>
-                    <View style={homeStyle.modalContent}>
-                        <Text style={homeStyle.modalTitle}>Budget Suggestions</Text>
-                        {/* Render budget suggestions here */}
-                        {budgetSuggestions.map((item, index) => (
-                          <Text key={index} style={homeStyle.suggestionText}>
-    <Text style={{ fontWeight: 'bold' }}>{item.category}</Text>: {item.suggestion}
-</Text>
-))}
-
-                        <Pressable onPress={() => setIsModalVisible(false)}>
-                            <Text style={homeStyle.closeButton}>Close</Text>
-                        </Pressable>
-                    </View>
+              <View style={homeStyle.buttonContent}>
+                <View style={homeStyle.lockIconContainer}>
+                  <Image
+                    source={require('../assets/crown_icon.png')} // Adjust the path to your crown icon
+                    style={homeStyle.lockIcon}
+                  />
                 </View>
+                <Text style={homeStyle.buttonText}>
+                  <Text style={{ fontWeight: 'bold' }}>AI Budget Suggestion</Text>
+                  {!isPremiumUser && (
+                    <>
+                      {'\n'}
+                      <Text style={homeStyle.hintText}>Unlock Premium to use this feature</Text>
+                    </>
+                  )}
+                </Text>
+              </View>
+            </Pressable>
+
+
+            <Modal
+              visible={isModalVisible}
+              animationType="slide"
+              transparent={true}
+            >
+              <View style={homeStyle.modalContainer}>
+                <View style={homeStyle.modalContent}>
+                  <Text style={homeStyle.modalTitle}>Budget Suggestions</Text>
+                  {/* Render budget suggestions here */}
+                  {budgetSuggestions.map((item, index) => (
+                    <Text key={index} style={homeStyle.suggestionText}>
+                      <Text style={{ fontWeight: 'bold' }}>{item.category}</Text>: {item.suggestion}
+                    </Text>
+                  ))}
+
+                  <Pressable onPress={() => setIsModalVisible(false)}>
+                    <Text style={homeStyle.closeButton}>Close</Text>
+                  </Pressable>
+                </View>
+              </View>
             </Modal>
             <Text style={{marginLeft:20,marginTop:30,fontSize:25,fontWeight:'bold'}}>Goals</Text>
                     </View>
@@ -547,6 +564,7 @@ const homeStyle = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     marginTop: 10,
+    marginBottom: 10,
   },
   okButtonText: {
     color: 'white',
@@ -571,20 +589,20 @@ modalContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-},
-modalContent: {
+  },
+  modalContent: {
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
     elevation: 5,
-},
-modalTitle: {
+  },
+  modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
-},
-closeButton: {
+  },
+  closeButton: {
     marginTop: 10,
     color: 'blue',
     textAlign: 'center',
