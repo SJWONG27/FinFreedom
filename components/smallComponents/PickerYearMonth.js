@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   selectedValues: {
-    color:'#FFFFFF',
+    color:'#000000',
     fontWeight: 'bold',
     fontSize: 16,
   },

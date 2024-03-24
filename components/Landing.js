@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import LandingPage1 from './LandingPage1';
 
 function Landing() {
     const navigation = useNavigation();
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.navigate('Login');
-        }, 2000); 
+            navigation.navigate('LandingPage1');
+        }, 2000);  
 
 
         return () => clearTimeout(timer);
