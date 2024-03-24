@@ -15,7 +15,7 @@ function Profile({ navigation }) {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const { isPremiumUser, togglePremiumStatus } = usePremiumStatus();
+  const { isPremiumUser, togglePremiumStatus } = usePremiumStatus(false);
 
   useEffect(() => {
     const unsubscribe = firebaseAuth.onAuthStateChanged(user => {
@@ -152,49 +152,44 @@ function Profile({ navigation }) {
         </Pressable>
       </Modal>
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible === 'changePassword'}
-        onRequestClose={() => {
-          setModalVisible(null);
-        }}
-      >
-        <Pressable
-          style={profileStyle.modalBackground}
-          onPress={() => setModalVisible(null)}
-        >
-          <View style={profileStyle.modalContainer}>
-            <View style={profileStyle.modalContent}>
-              <Text style={profileStyle.modalTitle}>Change Password</Text>
-              <TextInput
-                style={profileStyle.input}
-                placeholder="Current Password"
-                secureTextEntry={true}
-                value={currentPassword}
-                onChangeText={text => setCurrentPassword(text)}
-              />
-              <TextInput
-                style={profileStyle.input}
-                placeholder="New Password"
-                secureTextEntry={true}
-                value={newPassword}
-                onChangeText={text => setNewPassword(text)}
-              />
-              <TextInput
-                style={profileStyle.input}
-                placeholder="Confirm New Password"
-                secureTextEntry={true}
-                value={confirmNewPassword}
-                onChangeText={text => setConfirmNewPassword(text)}
-              />
-              <Pressable style={profileStyle.buttonEP} onPress={handleChangePasswordSave}>
-                <Text style={profileStyle.buttonTextEP}>Save Changes</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Pressable>
-      </Modal>
-      <Modal
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible === 'buyPremium' && isPremiumUser}
+  onRequestClose={() => {
+    setModalVisible(null);
+  }}
+>
+  <Pressable
+    style={profileStyle.modalBackground}
+    onPress={() => setModalVisible(null)}
+  >
+    <View style={profileStyle.modalContainer}>
+      <View style={profileStyle.modalContent}>
+        {!isPremiumUser ? (
+          <>
+            <Text style={profileStyle.modalTitle}>Buy Premium</Text>
+            <Text style={profileStyle.modalText}>
+              Upgrade to premium to unlock exclusive features!
+            </Text>
+            <Pressable style={profileStyle.buttonEP} onPress={handleBuyPremium}>
+              <Text style={profileStyle.buttonTextEP}>Buy Premium</Text>
+            </Pressable>
+          </>
+        ) : (
+          <>
+            <Text style={profileStyle.modalTitle}>Premium Unlocked!</Text>
+            <Pressable style={profileStyle.buttonEP} onPress={() => setModalVisible(null)}>
+              <Text style={profileStyle.buttonTextEP}>OK</Text>
+            </Pressable>
+          </>
+        )}
+      </View>
+    </View>
+  </Pressable>
+</Modal>
+
+
+<Modal
   animationType="slide"
   transparent={true}
   visible={modalVisible === 'buyPremium'}
@@ -208,14 +203,7 @@ function Profile({ navigation }) {
   >
     <View style={profileStyle.modalContainer}>
       <View style={profileStyle.modalContent}>
-        {isPremiumUser ? (
-          <>
-            <Text style={profileStyle.modalTitle}>Premium Unlocked!</Text>
-            <Pressable style={profileStyle.buttonEP} onPress={() => setModalVisible(null)}>
-              <Text style={profileStyle.buttonTextEP}>OK</Text>
-            </Pressable>
-          </>
-        ) : (
+        {!isPremiumUser ? (
           <>
             <Text style={profileStyle.modalTitle}>Buy Premium</Text>
             <Text style={profileStyle.modalText}>
@@ -225,11 +213,20 @@ function Profile({ navigation }) {
               <Text style={profileStyle.buttonTextEP}>Buy Premium</Text>
             </Pressable>
           </>
+        ) : null}
+        {isPremiumUser && (
+          <>
+            <Text style={profileStyle.modalTitle}>Premium Unlocked!</Text>
+            <Pressable style={profileStyle.buttonEP} onPress={() => setModalVisible(null)}>
+              <Text style={profileStyle.buttonTextEP}>OK</Text>
+            </Pressable>
+          </>
         )}
       </View>
     </View>
   </Pressable>
 </Modal>
+
 
 
       <Modal
