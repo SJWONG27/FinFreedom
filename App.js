@@ -18,9 +18,6 @@ import {View} from 'react-native';
 import { FIREBASE_AUTH } from './firebase';
 import Points from './components/Points';
 import { PremiumProvider } from './components/Premium';
-import LandingPage1 from './components/LandingPage1';
-import LandingPage2 from './components/LandingPage2';
-import LandingPage3 from './components/LandingPage3';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
