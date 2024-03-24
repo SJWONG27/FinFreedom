@@ -168,6 +168,7 @@ const loginStyle = StyleSheet.create({
         paddingHorizontal:10,
     },
     inputLabel:{
+        marginTop: 5,
         marginBottom:5,
     },
     button:{

@@ -18,9 +18,9 @@ const Item = ({ id, title, info, amountSaved, imageUrl, onDelete, onUpdateAmount
     return (
         <View>
             <ImageBackground
-                source={imageUrl}
+               
                 style={discoverStyle.item}
-                imageStyle={discoverStyle.imageBackground}
+             
             >
                 <View style={discoverStyle.content}>
                     <Text style={discoverStyle.message3}>Goal {id} - {title}</Text>
@@ -102,7 +102,7 @@ const Discover = () => {
     return (
         <ScrollView>
         <ImageBackground
-            source={require('../assets/background.png')}
+            
             style={discoverStyle.container}
         >
                 <View style={{marginTop:25,}}>
@@ -218,6 +218,7 @@ const Discover = () => {
 const discoverStyle = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:'white'
     },
     container2:{
         alignItems:'left',
@@ -233,6 +234,7 @@ const discoverStyle = StyleSheet.create({
         borderRadius: 10,
         marginRight: 10,
         overflow: 'hidden',
+        backgroundColor:'white'
     },
     imageBackground: {
         width: '100%',
@@ -252,16 +254,16 @@ const discoverStyle = StyleSheet.create({
     },
     message3: {
         marginTop: 30,
-        color: '#FFFFFF',
+        color: '#000',
         fontSize: 16,
     },
     message4: {
-        color: '#FFFFFF',
+        color:'#000',
         marginTop: 10,
         fontSize: 16,
     },
     addGoalButton: {
-        backgroundColor: '#1A43BF',
+        backgroundColor: '#000',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -281,7 +283,7 @@ const discoverStyle = StyleSheet.create({
 
     },
     modalContent: {
-        backgroundColor: '#000000',
+        backgroundColor: '#FFF',
         padding: 20,
         borderRadius: 10,
         alignItems: 'center',
@@ -289,13 +291,13 @@ const discoverStyle = StyleSheet.create({
         height: '40%'
     },
     modalTitle: {
-        color: 'white',
+        color: 'black',
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
     },
     input: {
-        color: 'white',
+        color: 'black',
         borderWidth: 1,
         borderColor: '#CCCCCC',
         borderRadius: 5,
@@ -307,7 +309,7 @@ const discoverStyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        backgroundColor: '#000000',
+        backgroundColor: '#FFF',
     },
     addButton: {
         paddingVertical: 10,
@@ -315,7 +317,7 @@ const discoverStyle = StyleSheet.create({
         borderRadius: 5,
     },
     addButtonText: {
-        color: '#1A43BF',
+        color: '#000000',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -325,7 +327,7 @@ const discoverStyle = StyleSheet.create({
         fontWeight: 'bold',
     },
     deleteButton: {
-        backgroundColor: '#8B0000',
+        backgroundColor: '#000000',
         paddingVertical: 8,
         paddingHorizontal: 15,
         borderRadius: 5,
@@ -337,39 +339,38 @@ const discoverStyle = StyleSheet.create({
         fontWeight: 'bold',
     },
     introContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: '#FFF',
         borderRadius: 10,
         padding: 20,
-        marginTop:20,
         marginBottom: 20,
     },
     introTitle: {
-        color: '#FFFFFF',
+        color: '#000',
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10,
     },
     introText: {
-        color: '#FFFFFF',
+        color: '#000000',
         fontSize: 16,
     },
 
     // Goal setting tips styles
     tipsContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+        backgroundColor: '#FFFFFF',
         borderRadius: 10,
         padding: 20,
         marginBottom: 20,
         marginTop:20,
     },
     tipsTitle: {
-        color: '#FFFFFF',
+        color: '#000000',
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
     },
     tip: {
-        color: '#FFFFFF',
+        color: '#000000',
         fontSize: 16,
         marginBottom: 5,
     },

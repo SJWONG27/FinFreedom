@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
         elevation: 5, // Add elevation for shadow (Android)
+        
     },
     title: {
         fontSize: 20,
@@ -226,17 +227,20 @@ const styles = StyleSheet.create({
     selected: {
         backgroundColor: '#cce5ff', // Light blue background for selected answer
         borderColor: '#007bff', // Blue border for selected answer
+        
     },
     answer: {
         fontSize: 16,
+        
     },
     buttons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        
     },
     confirmButton: {
-        backgroundColor: '#007bff',
+        backgroundColor: '#000',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
@@ -248,7 +252,7 @@ const styles = StyleSheet.create({
     },
     cancel: {
         fontSize: 16,
-        color: 'red',
+        color: 'black',
     },
 });
 

@@ -77,7 +77,7 @@ function Budget() {
 
   return (
     <ImageBackground
-      source={require('../assets/background.png')}
+      
       style={DSRStyle.container}
     >
       <ScrollView>
@@ -91,12 +91,18 @@ function Budget() {
               onYearChange={setSelectedYear}
               onMonthChange={setSelectedMonth}
             />
-            <View style={DSRStyle.container3}>
-              <Text style={DSRStyle.message1}>Income: RM {totalIncome}</Text>
-              <Text style={DSRStyle.message1}>Total Expenses: RM {totalExpenses.toFixed(2)}</Text>
-            </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between',marginTop:3,}}>
+                      <View style={DSRStyle.income}>
+  <Text style={{textAlign: 'center', fontSize: 18,margin:4}}>Income</Text>
+  <Text style={{textAlign: 'center',fontSize:20,color:'green'}}>RM {totalIncome}</Text>
+                      </View>
+                      <View style={DSRStyle.expenses}>
+                      <Text style={{textAlign: 'center', fontSize: 18,margin:4}}>Expenses</Text>
+                      <Text style={{textAlign: 'center',fontSize:20,color:'red'}}>RM {totalExpenses.toFixed(2)}</Text>
+                      </View>
+</View>
           </View>
-
+        
           <View style={DSRStyle.container5}>
             <View style={DSRStyle.container4}>
               <Text style={DSRStyle.label}>Category</Text>
@@ -104,7 +110,7 @@ function Budget() {
             </View>
             {monthlyExpenses[selectedMonth] ? monthlyExpenses[selectedMonth].map((expense, index) => (
               <View key={index} style={DSRStyle.container4}>
-                <Ionicons name={getIconName(expense.category)} size={24} color="#FFFFFF" />
+                <Ionicons name={getIconName(expense.category)} size={24} color='#000000' />
                 <Text style={DSRStyle.message1}>{expense.category}</Text>
                 <Text style={DSRStyle.message1}>RM {expense.amount.toFixed(2)}</Text>
               </View>
@@ -125,7 +131,7 @@ function Budget() {
                 <Ionicons
                   name={getIconName(item.key)}
                   size={24}
-                  color="#FFFFFF"
+                  color='#000000'
                   x={pieCentroid[0]}
                   y={pieCentroid[1]}
                   origin={{ x: -12, y: -12 }}
@@ -148,51 +154,64 @@ function Budget() {
 const DSRStyle = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 10,
+  
     },
     container2: {
       flex: 0.3,
-      marginTop: 20,
+  
       flexDirection: 'column',
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      backgroundColor: '#ffffff',
       alignItems: 'center',
       justifyContent: 'center',
+      padding: 30,
+      backgroundColor: '#ffffff',
       borderRadius: 10,
-      padding: 10,
+    elevation: 5,
+    textAlign: 'center',
+      marginBottom:10,
+      marginHorizontal:20,
+
     },
     container3: {
       flex: 0.5,
       marginVertical: 10,
       paddingHorizontal: 10,
+      
     },
     container4: {
       flexDirection: 'row',
       alignItems: 'center',
-      borderColor: '#FFFFFF',
+      borderColor:'#000000',
       paddingVertical: 8,
       marginVertical: 5,
       borderRadius: 5,
+      backgroundColor: '#ffffff',
+      marginLeft:35,
+      
     },
     container5: {
-      borderBottomWidth: 0.3,
-      borderColor: '#FFFFFF',
+      elevation:5,
+      borderColor:'#000000',
+      backgroundColor: '#ffffff',
     },
     label: {
       flex: 1,
       fontSize: 18,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: '#000000',
       textAlign: 'center',
+      marginLeft:35,
     },
     logo: {
       height: 316,
       width: 316,
       marginTop: 150,
+      
     },
     title: {
       fontSize: 22,
       fontWeight: 'bold',
-      color: '#6A6AFF',
+      color:'#000000',
       marginBottom: 10,
       textAlign: 'center',
       marginTop: 10,
@@ -200,32 +219,44 @@ const DSRStyle = StyleSheet.create({
     message1: {
       flex: 2,
       fontSize: 15,
-      color: '#FFFFFF',
+      color: '#000000',
       textAlign: 'center',
+      
     },
     message2: {
       fontSize: 12,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: '#000000',
       padding: 25,
       textAlign: 'center',
       color: 'silver',
     },
     pieChartContainer: {
-      flex: 0.8,
+      
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 10,
-      backgroundColor: 'black',
+      margin: 10,
+      backgroundColor: 'white',
       borderRadius: 10,
       padding: 10,
+        backgroundColor: '#ffffff',
+  borderRadius: 10,
+  shadowOffset: {
+    width: 0,
+    height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 3.84,
+elevation: 4,
+
     },
     chartTitle: {
       fontSize: 18,
       fontWeight: 'bold',
-      color: '#FFFFFF',
+      color: '#000000',
       marginBottom: 10,
       textAlign: 'center',
+      
     },
     legendItem: {
       flexDirection: 'row',
@@ -234,8 +265,42 @@ const DSRStyle = StyleSheet.create({
     },
     legendLabel: {
       fontSize: 14,
-      color: '#FFFFFF',
+      color: '#000000',
       marginLeft: 5,
+    },
+    income: {
+      width:175,
+      fontSize: 16,
+      marginBottom: 5,
+    //   backgroundColor: '#ffffff',
+    //   borderRadius: 10,
+    //   shadowOffset: {
+    //     width: 0,
+    //     height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 15,
+    // opacity:0.8,
+    textAlign: 'center',
+    
+    },
+    expenses: {
+      width:175,
+      fontSize: 16,
+      marginBottom: 5,
+    //   backgroundColor: '#ffffff',
+    //   borderRadius: 10,
+    //   shadowOffset: {
+    //     width: 0,
+    //     height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 15,
+    // opacity:0.8,
+    textAlign: 'center',
+    
     },
   });
   
