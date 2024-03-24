@@ -120,6 +120,49 @@ function Profile({ navigation }) {
       <Modal
         animationType="slide"
         transparent={true}
+        visible={modalVisible === 'changePassword'}
+        onRequestClose={() => {
+          setModalVisible(null);
+        }}
+      >
+        <Pressable
+          style={profileStyle.modalBackground}
+          onPress={() => setModalVisible(null)}
+        >
+          <View style={profileStyle.modalContainer}>
+            <View style={profileStyle.modalContent}>
+              <Text style={profileStyle.modalTitle}>Change Password</Text>
+              <TextInput
+                style={profileStyle.input}
+                placeholder="Current Password"
+                secureTextEntry={true}
+                value={currentPassword}
+                onChangeText={text => setCurrentPassword(text)}
+              />
+              <TextInput
+                style={profileStyle.input}
+                placeholder="New Password"
+                secureTextEntry={true}
+                value={newPassword}
+                onChangeText={text => setNewPassword(text)}
+              />
+              <TextInput
+                style={profileStyle.input}
+                placeholder="Confirm New Password"
+                secureTextEntry={true}
+                value={confirmNewPassword}
+                onChangeText={text => setConfirmNewPassword(text)}
+              />
+              <Pressable style={profileStyle.buttonEP} onPress={handleChangePasswordSave}>
+                <Text style={profileStyle.buttonTextEP}>Save Changes</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Pressable>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
         visible={modalVisible === 'editProfile'}
         onRequestClose={() => {
           setModalVisible(null);
