@@ -127,30 +127,19 @@ const Discover = () => {
                     </View>
                     </View>
                     {goals.map(item => (
-                        
-                <View key={item.id} style={discoverStyle.containerGoal}>
-                
-                    <View style={discoverStyle.textContainer}>
-                        <Text style={discoverStyle.messageGoal}>{item.title}</Text>
-                        <Text style={discoverStyle.messageReach}>RM {item.amountSaved}</Text>
-                        <Text style={discoverStyle.messageTarget}>Left RM {item.remainingAmount}</Text>
-                        
-                    </View>
-                    <StaticBar percentage={(parseFloat(item.amountSaved) / parseFloat(item.info)) * 100} />
-                    <Pressable
-                        onPress={() => {
-                            const newAmount = prompt('Enter new amount saved:');
-                            if (newAmount !== null) {
-                                handleUpdateAmountSaved(item.id, newAmount);
-                            }
-                        }}
-                    >
-                        <Text>Edit</Text>
-                    </Pressable>
-                    
-                    
-                </View>
-            ))}
+    <View key={item.id} style={discoverStyle.containerGoal}>
+        <View style={discoverStyle.textContainer}>
+            <Text style={discoverStyle.messageGoal}>{item.title}</Text>
+            <Text style={discoverStyle.messageReach}>RM {item.amountSaved}</Text>
+            <Text style={discoverStyle.messageTarget}>Left RM {item.remainingAmount}</Text>
+        </View>
+        <StaticBar percentage={(parseFloat(item.amountSaved) / parseFloat(item.info)) * 100} />
+        {/* Replace the "Edit" button with a "Delete" button */}
+        <Pressable onPress={() => handleDeleteGoal(item.id)} style={discoverStyle.deleteButton}>
+            <Text>Delete</Text>
+        </Pressable>
+    </View>
+))}
             <ScrollView>
                 <View style={{marginTop:0,backgroundColor:'white'}}>
                     <Text style={discoverStyle.reminder}>Maximum 3 goals could be added</Text>
@@ -340,13 +329,7 @@ const discoverStyle = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-    deleteButton: {
-        backgroundColor: '#000000',
-        paddingVertical: 8,
-        paddingHorizontal: 15,
-        borderRadius: 5,
-        marginTop: 5,
-    },
+    
     deleteButtonText: {
         color: 'white',
         fontSize: 14,
