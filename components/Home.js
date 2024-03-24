@@ -599,9 +599,9 @@ budgetLeft: {
   marginBottom: 15,
   backgroundColor: '#ffffff',
   borderRadius: 10,
-elevation: 5,
 textAlign: 'center',
- borderWidth: 0.3,
+ borderTopWidth: 1,
+ borderBottomWidth: 1,
   borderRightColor: 'gray', 
 },
 income: {
