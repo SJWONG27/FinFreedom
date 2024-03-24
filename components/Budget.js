@@ -158,7 +158,7 @@ const DSRStyle = StyleSheet.create({
     },
     container2: {
       flex: 0.3,
-  
+      marginTop:50,
       flexDirection: 'column',
       backgroundColor: '#ffffff',
       alignItems: 'center',

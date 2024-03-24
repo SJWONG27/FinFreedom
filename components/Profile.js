@@ -80,7 +80,7 @@ function Profile({ navigation }) {
 
   return (
     <ImageBackground
-      source={require('../assets/background.png')}
+      //source={require('../assets/background.png')}
       style={profileStyle.container}
     >
       <View style={profileStyle.container2}>
@@ -89,7 +89,7 @@ function Profile({ navigation }) {
             source={profilePhoto ? { uri: profilePhoto } : (user?.photoURL ? { uri: user.photoURL } : defaultProfileImage)}
             style={profileStyle.profileImage}
           />
-          <Text style={profileStyle.username}>{user?.displayName || "User"}</Text>
+          
           {user?.email && <Text style={profileStyle.email}>{user.email}</Text>}
         </View>
         <View style={profileStyle.buttonContainer}>
@@ -269,19 +269,15 @@ const profileStyle = StyleSheet.create({
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
+    marginTop:20,
   },
   profileImage: {
     width: 150,
     height: 150,
     borderRadius: 75,
   },
-  username: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    marginTop: 10,
-  },
   email: {
-    color: '#FFFFFF',
+    color: 'black',
     fontSize: 14,
     marginTop: 5,
   },
@@ -291,7 +287,7 @@ const profileStyle = StyleSheet.create({
   button: {
     height: 40,
     width: 200,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'black',
     borderRadius: 10,
     marginBottom: 10,
     textAlign:'center',
@@ -310,7 +306,7 @@ const profileStyle = StyleSheet.create({
   },
   buttonText: {
     padding: 10,
-    color: '#000000',
+    color: 'white',
     textAlign: 'center',
   },
   buttonTextEP:{
@@ -323,7 +319,7 @@ const profileStyle = StyleSheet.create({
     fontWeight:'bold',
   },
   motto: {
-    color: 'lightgreen', 
+    color: 'blue', 
     fontSize: 20,
     marginTop: 150, 
     marginBottom: 10, 
