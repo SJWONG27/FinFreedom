@@ -15,6 +15,9 @@ import {View} from 'react-native';
 import { FIREBASE_AUTH } from './firebase';
 import Points from './components/Points';
 import { PremiumProvider } from './components/Premium';
+import LandingPage1 from './components/LandingPage1';
+import LandingPage2 from './components/LandingPage2';
+import LandingPage3 from './components/LandingPage3';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -65,6 +68,9 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage1" component={LandingPage1} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage2" component={LandingPage2} options={{ headerShown: false }} />
+        <Stack.Screen name="LandingPage3" component={LandingPage3} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
         <Stack.Screen name="MainApp" component={MainAppNavigator} options={{ headerShown: false }} /> 
