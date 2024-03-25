@@ -11,7 +11,7 @@ FinFreedom offers a comprehensive suite of tools and features to guide users on 
 With AI-driven budgeting, investment insights, and a reward system, FinFreedom makes managing finances easy and rewarding. Our subscription model offers premium features, while B2B partnerships and advertising generate revenue. Stand out with FinFreedom and unlock your path to financial freedom today.<br>
 
 <br>
-Start up the project by using Expo on your android/ios simulator<br>
+Start up the project by using Expo and open on your android/ios simulator<br>
 npx expo<br>
 
 Need to install react native<br>
